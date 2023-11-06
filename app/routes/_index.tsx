@@ -1,41 +1,46 @@
-import type { MetaFunction } from "@remix-run/cloudflare";
+import Navbar from "~/component/navbar";
+import styles from "../styles/index.css";
+import productStyles from "../styles/products.css"
+import Hero from "~/component/hero";
+// import Products from "~/component/products";
+import { getProducts } from "~/controllers/productController";
+import HomeProducts from "~/component/homeProducts";
+import Footer from "~/component/footer"
+const _index = () => {
+  return (
+    <>
+      <Navbar />
+      <Hero />
+      <HomeProducts />
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
+      <div className="gs-vdo">
+        <iframe src="https://www.youtube.com/embed/9Pbe4DyMQYw?si=SoWUfS1wltLZWQAb" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ></iframe>
+      </div>
+
+      {/* <Products /> */}
+
+      <Footer />
+    </>
+  );
 };
 
-export default function Index() {
-  return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
-    </div>
-  );
-}
+export default _index;
+
+export const links = () => [
+  {
+    rel: "stylesheet",
+    href: styles,
+  },
+  {
+    rel: "stylesheet",
+    href: productStyles
+  }
+];
+
+export const loader = async () => {
+  try {
+    return await getProducts();
+  } catch (e) {
+    return { message: "something went wrong" };
+  }
+};

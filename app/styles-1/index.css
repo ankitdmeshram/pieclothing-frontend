@@ -1,0 +1,57 @@
+.image {
+    width: 100%;
+}
+
+.img {
+    width: 100%;
+}
+
+
+.sections {
+    display: flex;
+    width: 100%;
+}
+
+.product {
+    width: 50%;
+}
+
+.title {
+    margin: 50px auto;
+    text-align: center;
+    font-family: "Lucida Handwriting", cursive;
+}
+
+.fit {
+    width: 100%;
+}
+
+.products {
+    /* width: 1300px; */
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+.card {
+    width: 100%;
+    max-width: 350px;
+    /* border: 1px solid lightgray; */
+    padding: 20px;
+    margin: 20px;
+    border-radius: 14px;
+    text-align: center;
+    font-family: "Lucida Handwriting", cursive;
+    transition: transform .2s;
+}
+
+.card:hover {
+    transform: scale(1.1);
+}
+
+.product-image {
+    width: 100%;
+    border-radius: 14px;
+}
