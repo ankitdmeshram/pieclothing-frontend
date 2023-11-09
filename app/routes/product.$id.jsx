@@ -26,6 +26,33 @@ const Product = () => {
     console.log("forCart", forCart);
   }, [forCart]);
 
+  const addToCart = (_id) => {
+    setForCart((prev) => {
+      return {
+        ...prev,
+        id: _id,
+      };
+    });
+    if (productDetails?.size.length > 0) {
+      if (forCart?.size) {
+        console.log("trueeeeee");
+      } else {
+        alert("Select Size");
+        console.log("Falseeee");
+        return;
+      }
+    }
+    if (productDetails?.color.length > 0) {
+      if (forCart?.color) {
+        console.log("trueeee");
+      } else {
+        alert("Select Color");
+        console.log("Falseeee");
+        return;
+      }
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -163,7 +190,12 @@ const Product = () => {
                 })}
             </div>
 
-            <div className="add-to-cart">Add To Cart</div>
+            <div
+              className="add-to-cart"
+              onClick={() => addToCart(productDetails?._id)}
+            >
+              Add To Cart
+            </div>
             <div className="buy-now">Buy Now</div>
             {productDetails?.description && (
               <div className="decription">
