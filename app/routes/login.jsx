@@ -1,46 +1,104 @@
 import Navbar from "~/component/navbar";
-import Footer from "~/component/footer"
-import styles from "../styles/login.css"
-import { Link } from "@remix-run/react";
+import Footer from "~/component/footer";
+import styles from "../styles/login.css";
+import { Link, useNavigate } from "@remix-run/react";
+import { useEffect, useState } from "react";
+import { signIn } from "../controllers/authController";
+import { getCookie, setCookie } from "../utils/cookies";
 
 const login = () => {
-    return (
-        <>
-            <Navbar />
+  const navigate = useNavigate();
 
-            <div className="login-form">
-                <div className="form-group">
-                    <p>Email*: </p>
-                    <input type="email" />
-                </div>
-                <div className="form-group">
-                    <p>Password*: </p>
-                    <input type="password" />
-                </div>
-                <div className="form-group">
-                    <button>Login</button>
-                </div>
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+  });
 
-                <p style={{ textAlign: 'center', marginTop: '20px' }}> <Link to={"../reset-password"}>Forget Password ?</Link></p>
+  useEffect(() => {
+    getCookie("userCookie").then((res) => {
+      if (res) {
+        console.log("res", res);
+        navigate("../");
+      }
+    });
+  }, []);
 
-                <hr style={{ margin: '20px 0px 15px 0px' }} />
+  const signInHandle = async () => {
+    if (!userData?.email || !userData?.password) {
+      alert("Email and passwords are required fill");
+    } else {
+      const userCookie = await signIn(userData?.email, userData?.password);
+      console.log(userCookie);
+      if (userCookie?.success) {
+        // console.log("treeeeeee  ");
+        setCookie("userCookie", JSON.stringify(userCookie?.userDetails));
+        navigate("../");
+      } else {
+        console.log("falseeee  ");
+      }
+    }
+  };
 
-                <p style={{ textAlign: 'center' }}>Not Registered Yet ? <br /> <br /> <Link to={"../register"}>Register Here</Link></p>
+  return (
+    <>
+      <Navbar />
 
-            </div>
+      <div className="login-form">
+        <div className="form-group">
+          <p>Email*: </p>
+          <input
+            onChange={(e) =>
+              setUserData((prev) => {
+                return {
+                  ...prev,
+                  email: e.target.value,
+                };
+              })
+            }
+            type="email"
+          />
+        </div>
+        <div className="form-group">
+          <p>Password*: </p>
+          <input
+            onChange={(e) =>
+              setUserData((prev) => {
+                return {
+                  ...prev,
+                  password: e.target.value,
+                };
+              })
+            }
+            type="password"
+          />
+        </div>
+        <div className="form-group">
+          <button onClick={() => signInHandle()}>Login</button>
+        </div>
 
+        <p style={{ textAlign: "center", marginTop: "20px" }}>
+          {" "}
+          <Link to={"../reset-password"}>Forget Password ?</Link>
+        </p>
 
+        <hr style={{ margin: "20px 0px 15px 0px" }} />
 
-            <Footer />
-        </>
-    )
-}
+        <p style={{ textAlign: "center" }}>
+          Not Registered Yet ? <br /> <br />{" "}
+          <Link to={"../register"}>Register Here</Link>
+        </p>
+      </div>
 
-export default login
+      <Footer />
+    </>
+  );
+};
+
+export default login;
 
 export const links = () => [
-    {
-        rel: 'stylesheet',
-        href: styles
-    }
-]
+  {
+    rel: "stylesheet",
+    href: styles,
+  },
+];
