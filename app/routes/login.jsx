@@ -31,7 +31,7 @@ const login = () => {
       console.log(userCookie);
       if (userCookie?.success) {
         // console.log("treeeeeee  ");
-        setCookie("userCookie", JSON.stringify(userCookie?.userDetails));
+        setCookie("UD", JSON.stringify(userCookie?.userDetails));
         navigate("../");
       } else {
         console.log("falseeee  ");
