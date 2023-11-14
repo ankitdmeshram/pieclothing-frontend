@@ -1,4 +1,4 @@
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useNavigate } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { singleProduct } from "../controllers/productController";
 import { addCart } from "../controllers/cartController";
@@ -8,6 +8,7 @@ import { getCookie, setCookie } from "../utils/cookies";
 
 const Product = () => {
   const loaderData = useLoaderData();
+  const navigate = useNavigate();
 
   const [productDetails, setProductDetails] = useState({});
   const [forCart, setForCart] = useState({
@@ -17,6 +18,7 @@ const Product = () => {
     size: "",
     color: "",
   });
+  const [whichBtn, setWhichBtn] = useState("add");
   const [imgUrl, setImgUrl] = useState(
     "http://localhost:8788/images/image3.webp"
   );
@@ -124,7 +126,11 @@ const Product = () => {
 
     console.log("forCart===", forCart);
 
-    addCart(forCart);
+    const cartResponse = await addCart(forCart);
+
+    if (cartResponse?.success) {
+      setWhichBtn("view");
+    }
   };
 
   return (
@@ -264,12 +270,18 @@ const Product = () => {
                 })}
             </div>
 
-            <div
-              className="add-to-cart"
-              onClick={() => addToCart(productDetails?._id)}
-            >
-              Add To Cart
-            </div>
+            {whichBtn == "add" ? (
+              <div
+                className="add-to-cart"
+                onClick={() => addToCart(productDetails?._id)}
+              >
+                Add To Cart
+              </div>
+            ) : (
+              <div className="add-to-cart" onClick={() => navigate("../cart")}>
+                View Cart
+              </div>
+            )}
             <div className="buy-now">Buy Now</div>
             {productDetails?.description && (
               <div className="decription">
