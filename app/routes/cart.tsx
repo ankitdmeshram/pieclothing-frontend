@@ -10,16 +10,55 @@ const Cart = () => {
         <table border={0}>
           <thead>
             <tr>
-              <th>Sr. No.</th>
+              {/* <th>Sr. No.</th> */}
               <th>Image</th>
-              <th style={{ width: "100%" }}>Item</th>
+              <th style={{ minWidth: "100%" }}>Item</th>
               <th>Price</th>
               <th>X</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>1</td>
+              {/* <td>1</td> */}
+              <td>
+                <img
+                  src={"http://localhost:8788/images/image3.webp"}
+                  width={50}
+                  alt="tsrhit"
+                />
+              </td>
+              <td>Item Name</td>
+              <td>Rs.100</td>
+              <td>X</td>
+            </tr>
+            <tr>
+              {/* <td>1</td> */}
+              <td>
+                <img
+                  src={"http://localhost:8788/images/image3.webp"}
+                  width={50}
+                  alt="tsrhit"
+                />
+              </td>
+              <td>Item Name</td>
+              <td>Rs.100</td>
+              <td>X</td>
+            </tr>
+            <tr>
+              {/* <td>1</td> */}
+              <td>
+                <img
+                  src={"http://localhost:8788/images/image3.webp"}
+                  width={50}
+                  alt="tsrhit"
+                />
+              </td>
+              <td>Item Name</td>
+              <td>Rs.100</td>
+              <td>X</td>
+            </tr>
+            <tr>
+              {/* <td>1</td> */}
               <td>
                 <img
                   src={"http://localhost:8788/images/image3.webp"}

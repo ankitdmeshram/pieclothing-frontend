@@ -1,15 +1,19 @@
 import { useLoaderData } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { singleProduct } from "../controllers/productController";
+import { addCart } from "../controllers/cartController";
 import singleProductStyle from "../styles/singleProduct.css";
 import Navbar from "~/component/navbar";
+import { getCookie, setCookie } from "../utils/cookies";
 
 const Product = () => {
   const loaderData = useLoaderData();
 
   const [productDetails, setProductDetails] = useState({});
   const [forCart, setForCart] = useState({
-    id: "",
+    uid: "",
+    tempUid: "",
+    pid: "",
     size: "",
     color: "",
   });
@@ -20,19 +24,78 @@ const Product = () => {
   useEffect(() => {
     console.log("Loaderdata", loaderData);
     setProductDetails(loaderData?.product);
+    setForCart((prev) => {
+      return {
+        ...prev,
+        pid: loaderData?.product?._id,
+      };
+    });
+    userDetails();
   }, [loaderData]);
 
   useEffect(() => {
     console.log("forCart", forCart);
   }, [forCart]);
 
-  const addToCart = (_id) => {
-    setForCart((prev) => {
-      return {
-        ...prev,
-        id: _id,
-      };
-    });
+  const userDetails = () => {
+    getCookie("UD")
+      .then((res) => {
+        if (!res) {
+          throw err;
+        }
+        console.log("res", JSON.parse(res));
+        setForCart((prev) => {
+          return {
+            ...prev,
+            uid: JSON.parse(res)?._id,
+            tempUid: true,
+          };
+        });
+      })
+      .catch((err) => {
+        getCookie("TUD")
+          .then((res) => {
+            if (!res) {
+              throw err;
+            }
+            setForCart((prev) => {
+              return {
+                ...prev,
+                uid: res,
+                tempUid: true,
+              };
+            });
+          })
+          .catch(() => {
+            const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+            const numberChars = "0123456789";
+            const specialChars = "!@#$%^&*()_+[]{}|;:,.<>?";
+
+            const allChars =
+              uppercaseChars + lowercaseChars + numberChars + specialChars;
+
+            let tempUser = "";
+            for (let i = 0; i < 15; i++) {
+              const randomIndex = Math.floor(Math.random() * allChars.length);
+              tempUser += allChars.charAt(randomIndex);
+            }
+
+            setCookie("TUD", tempUser);
+            setForCart((prev) => {
+              return {
+                ...prev,
+                uid: tempUser,
+                tempUid: true,
+              };
+            });
+          });
+      });
+  };
+
+  const addToCart = async (_id) => {
+    await userDetails();
+
     if (productDetails?.size.length > 0) {
       if (forCart?.size) {
         console.log("trueeeeee");
@@ -51,6 +114,17 @@ const Product = () => {
         return;
       }
     }
+
+    setForCart((prev) => {
+      return {
+        ...prev,
+        pid: _id,
+      };
+    });
+
+    console.log("forCart===", forCart);
+
+    addCart(forCart);
   };
 
   return (

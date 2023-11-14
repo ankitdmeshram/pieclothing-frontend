@@ -1,6 +1,6 @@
 import Products from "~/component/products";
 import { getProducts } from "~/controllers/productController";
-import Styles from "../styles/products.css"
+import Styles from "../styles/products.css";
 import Navbar from "~/component/navbar";
 import Footer from "~/component/footer";
 const product = () => {
@@ -12,11 +12,11 @@ const product = () => {
       </div> */}
       <Products />
       <Footer />
+    </>
+  );
+};
 
-    </>)
-}
-
-export default product
+export default product;
 
 export const loader = async () => {
   try {
@@ -29,6 +29,6 @@ export const loader = async () => {
 export const links = () => [
   {
     rel: "stylesheet",
-    href: Styles
-  }
-]
+    href: Styles,
+  },
+];

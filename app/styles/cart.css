@@ -8,6 +8,10 @@
   margin-bottom: 100px;
   overflow-x: scroll;
 }
+.cart::-webkit-scrollbar {
+  width: 20px;
+  display: none;
+}
 .cart-container {
   display: flex;
   padding: 0 100px 100px 100px;
