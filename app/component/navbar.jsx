@@ -1,7 +1,8 @@
-import { Link } from "@remix-run/react";
+import { Link, useNavigate } from "@remix-run/react";
 import { useEffect } from "react";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   useEffect(() => {
     console.log(window.location.pathname == "/");
     window.addEventListener("scroll", function () {
@@ -35,15 +36,12 @@ const Navbar = () => {
         </div>
 
         <div className="logo">
-          <h2>Pie</h2>
+          <h2 onClick={() => navigate("../")}>Pie</h2>
         </div>
         <div className="navigation">
           <Link to={"/"}>Home</Link>
           <Link to={"../products"}>Products</Link>
           <a href="#">Cat 1</a>
-          <a href="#">Cat 2</a>
-          <a href="#">Cat 3</a>
-          <a href="#">Cat 4</a>
           <a href="#">Contacts</a>
         </div>
         <div className="icons">
@@ -98,19 +96,14 @@ const Navbar = () => {
 
         <ul className="nav">
           <li>
-            <a href="">Home</a>
+            <Link to={"/"}>Home</Link>
           </li>
           <li>
-            <a href="">About</a>
+            <Link to={"../products"}>Products</Link>
           </li>
+
           <li>
-            <a href="">Products</a>
-          </li>
-          <li>
-            <a href="">Cart</a>
-          </li>
-          <li>
-            <a href="">Contact</a>
+            <Link to={"../cart"}>Cart</Link>
           </li>
         </ul>
 

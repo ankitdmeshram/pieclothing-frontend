@@ -5,7 +5,14 @@ export const addCart = (cart: any) => {
   try {
     const { pid, uid, tempUid, size, color } = cart;
 
-    console.log("pid, uid, tempUid, size, color",pid, uid, tempUid, size, color)
+    console.log(
+      "pid, uid, tempUid, size, color",
+      pid,
+      uid,
+      tempUid,
+      size,
+      color
+    );
     const body = {
       pid,
       uid,
@@ -14,6 +21,14 @@ export const addCart = (cart: any) => {
       color,
     };
     return postAPI(`${domain}/api/cart/addtocart`, JSON.stringify(body));
+  } catch (err) {
+    console.log("Something went wrong", err);
+  }
+};
+
+export const viewCart = (uid: string) => {
+  try {
+    return postAPI(`${domain}/api/cart/viewcart`, JSON.stringify({ uid }));
   } catch (err) {
     console.log("Something went wrong", err);
   }
