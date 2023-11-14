@@ -18,7 +18,7 @@ const register = () => {
   });
 
   useEffect(() => {
-    getCookie("userCookie").then((res) => {
+    getCookie("UD").then((res) => {
       if (res) {
         console.log("res", res);
         navigate("../");
