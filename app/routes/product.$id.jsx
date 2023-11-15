@@ -5,6 +5,7 @@ import { addCart } from "../controllers/cartController";
 import singleProductStyle from "../styles/singleProduct.css";
 import Navbar from "~/component/navbar";
 import { getCookie, setCookie } from "../utils/cookies";
+import { frontdomain } from "../utils/domain";
 
 const Product = () => {
   const loaderData = useLoaderData();
@@ -19,9 +20,7 @@ const Product = () => {
     color: "",
   });
   const [whichBtn, setWhichBtn] = useState("add");
-  const [imgUrl, setImgUrl] = useState(
-    "http://localhost:8788/images/image3.webp"
-  );
+  const [imgUrl, setImgUrl] = useState(`${frontdomain}/images/image3.webp`);
 
   useEffect(() => {
     console.log("Loaderdata", loaderData);
@@ -146,31 +145,31 @@ const Product = () => {
 
             <div className="img-thumb">
               <img
-                src="http://localhost:8788/images/image3.webp"
+                src={`${frontdomain}/images/image3.webp`}
                 alt="test"
                 onClick={() =>
-                  setImgUrl("http://localhost:8788/images/image3.webp")
+                  setImgUrl(`${frontdomain}/frontdomainimages/image3.webp`)
                 }
               />
               <img
-                src="http://localhost:8788/images/image4.webp"
+                src={`${frontdomain}/images/image4.webp`}
                 alt="test"
                 onClick={() =>
-                  setImgUrl("http://localhost:8788/images/image4.webp")
+                  setImgUrl(`${frontdomain}/frontdomainimages/image4.webp`)
                 }
               />
               <img
-                src="http://localhost:8788/images/image5.webp"
+                src={`${frontdomain}/images/image5.webp`}
                 alt="test"
                 onClick={() =>
-                  setImgUrl("http://localhost:8788/images/image5.webp")
+                  setImgUrl(`${frontdomain}/frontdomainimages/image5.webp`)
                 }
               />
               <img
-                src="http://localhost:8788/images/image6.webp"
+                src={`${frontdomain}/images/image6.webp`}
                 alt="test"
                 onClick={() =>
-                  setImgUrl("http://localhost:8788/images/image6.webp")
+                  setImgUrl(`${frontdomain}/frontdomainimages/image6.webp`)
                 }
               />
             </div>

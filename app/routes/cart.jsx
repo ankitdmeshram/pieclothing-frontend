@@ -4,6 +4,7 @@ import styles from "~/styles/cart.css";
 import { getCookie, setCookie } from "../utils/cookies";
 import { useEffect, useState } from "react";
 import { viewCart } from "~/controllers/cartController";
+import { frontdomain } from "~/utils/domain";
 
 const Cart = () => {
   const [userId, setUserId] = useState("");
@@ -80,7 +81,7 @@ const Cart = () => {
               {/* <td>1</td> */}
               <td>
                 <img
-                  src={"http://localhost:8788/images/image3.webp"}
+                  src={`${frontdomain}/images/image3.webp`}
                   width={50}
                   alt="tsrhit"
                 />
@@ -93,7 +94,7 @@ const Cart = () => {
               {/* <td>1</td> */}
               <td>
                 <img
-                  src={"http://localhost:8788/images/image3.webp"}
+                  src={`${frontdomain}/images/image3.webp`}
                   width={50}
                   alt="tsrhit"
                 />
@@ -106,7 +107,7 @@ const Cart = () => {
               {/* <td>1</td> */}
               <td>
                 <img
-                  src={"http://localhost:8788/images/image3.webp"}
+                  src={`${frontdomain}/images/image3.webp`}
                   width={50}
                   alt="tsrhit"
                 />
@@ -119,7 +120,7 @@ const Cart = () => {
               {/* <td>1</td> */}
               <td>
                 <img
-                  src={"http://localhost:8788/images/image3.webp"}
+                  src={`${frontdomain}/images/image3.webp`}
                   width={50}
                   alt="tsrhit"
                 />
