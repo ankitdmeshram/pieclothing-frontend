@@ -147,30 +147,22 @@ const Product = () => {
               <img
                 src={`${frontdomain}/images/image3.webp`}
                 alt="test"
-                onClick={() =>
-                  setImgUrl(`${frontdomain}/frontdomainimages/image3.webp`)
-                }
+                onClick={() => setImgUrl(`${frontdomain}/images/image3.webp`)}
               />
               <img
                 src={`${frontdomain}/images/image4.webp`}
                 alt="test"
-                onClick={() =>
-                  setImgUrl(`${frontdomain}/frontdomainimages/image4.webp`)
-                }
+                onClick={() => setImgUrl(`${frontdomain}/images/image4.webp`)}
               />
               <img
                 src={`${frontdomain}/images/image5.webp`}
                 alt="test"
-                onClick={() =>
-                  setImgUrl(`${frontdomain}/frontdomainimages/image5.webp`)
-                }
+                onClick={() => setImgUrl(`${frontdomain}/images/image5.webp`)}
               />
               <img
                 src={`${frontdomain}/images/image6.webp`}
                 alt="test"
-                onClick={() =>
-                  setImgUrl(`${frontdomain}/frontdomainimages/image6.webp`)
-                }
+                onClick={() => setImgUrl(`${frontdomain}/images/image6.webp`)}
               />
             </div>
           </div>
