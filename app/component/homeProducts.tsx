@@ -1,8 +1,9 @@
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useNavigate } from "@remix-run/react";
 import { useEffect, useState } from "react";
 
 const HomeProducts = () => {
   const loaderData: any = useLoaderData();
+  const navigate: any = useNavigate();
 
   const [products, setProducts] = useState([]);
 
@@ -19,7 +20,11 @@ const HomeProducts = () => {
         {products.length > 0 &&
           products.map((product: any) => {
             return (
-              <div className="card" key={product?._id}>
+              <div
+                className="card"
+                key={product?._id}
+                onClick={() => navigate(`./product/${product?._id}`)}
+              >
                 <img
                   className="product-image"
                   src="https://veloce.in/cdn/shop/files/IMG_2580.png?v=1682005668&width=960"

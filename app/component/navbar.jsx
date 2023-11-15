@@ -41,8 +41,9 @@ const Navbar = () => {
         <div className="navigation">
           <Link to={"/"}>Home</Link>
           <Link to={"../products"}>Products</Link>
-          <a href="#">Cat 1</a>
-          <a href="#">Contacts</a>
+          <Link to={"../cart"}>Cart</Link>
+          <Link to={"../login"}>Login </Link>
+          <Link to={"../register"}>Register</Link>
         </div>
         <div className="icons">
           <Link to={"../login"}>
@@ -104,6 +105,12 @@ const Navbar = () => {
 
           <li>
             <Link to={"../cart"}>Cart</Link>
+          </li>
+          <li>
+            <Link to={"../login"}>Login</Link>
+          </li>
+          <li>
+            <Link to={"../register"}>Register</Link>
           </li>
         </ul>
 
