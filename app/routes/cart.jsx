@@ -8,6 +8,7 @@ import { frontdomain } from "~/utils/domain";
 
 const Cart = () => {
   const [userId, setUserId] = useState("");
+  const [cartList, setCartList] = useState([]);
 
   useEffect(() => {
     userDetails();
@@ -21,6 +22,7 @@ const Cart = () => {
         }
         console.log("res 18", res);
         console.log("res 19", JSON.parse(res)?._id);
+        setUserId(JSON.parse(res)?._id);
         viewCartById(JSON.parse(res)?._id);
       })
       .catch((err) => {
@@ -59,6 +61,9 @@ const Cart = () => {
     const response = await viewCart(uid);
     if (response) {
       console.log("response 57 ", response);
+      if (response?.productList.length > 0) {
+        setCartList(response?.productList);
+      }
     }
   };
 
@@ -77,58 +82,32 @@ const Cart = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              {/* <td>1</td> */}
-              <td>
-                <img
-                  src={`${frontdomain}/images/image3.webp`}
-                  width={50}
-                  alt="tsrhit"
-                />
-              </td>
-              <td>Item Name</td>
-              <td>Rs.100</td>
-              <td>X</td>
-            </tr>
-            <tr>
-              {/* <td>1</td> */}
-              <td>
-                <img
-                  src={`${frontdomain}/images/image3.webp`}
-                  width={50}
-                  alt="tsrhit"
-                />
-              </td>
-              <td>Item Name</td>
-              <td>Rs.100</td>
-              <td>X</td>
-            </tr>
-            <tr>
-              {/* <td>1</td> */}
-              <td>
-                <img
-                  src={`${frontdomain}/images/image3.webp`}
-                  width={50}
-                  alt="tsrhit"
-                />
-              </td>
-              <td>Item Name</td>
-              <td>Rs.100</td>
-              <td>X</td>
-            </tr>
-            <tr>
-              {/* <td>1</td> */}
-              <td>
-                <img
-                  src={`${frontdomain}/images/image3.webp`}
-                  width={50}
-                  alt="tsrhit"
-                />
-              </td>
-              <td>Item Name</td>
-              <td>Rs.100</td>
-              <td>X</td>
-            </tr>
+            {cartList.length > 0
+              ? cartList.map((cart) => {
+                  return (
+                    <tr key={cart?._id}>
+                      {/* <td>1</td> */}
+                      <td>
+                        <img
+                          src={
+                            cart?.img?.length > 0
+                              ? cart?.img[0]
+                              : `${frontdomain}/images/image3.webp`
+                          }
+                          width={50}
+                          alt="{cart?.name}"
+                        />
+                      </td>
+                      <td>{cart?.name}</td>
+                      <td>
+                        Rs.{" "}
+                        {cart?.offerPrice > 0 ? cart?.offerPrice : cart?.price}
+                      </td>
+                      <td>X</td>
+                    </tr>
+                  );
+                })
+              : null}
           </tbody>
         </table>
 
