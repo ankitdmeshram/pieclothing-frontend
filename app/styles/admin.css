@@ -176,11 +176,12 @@
 }
 
 .ana-box {
-  width: 22%;
   height: 200px;
   background-color: #f2f2f2;
   margin: 10px;
   text-align: center;
+  width: 22%;
+  min-width: 200px;
 }
 .ana-no {
   font-size: 60px;
