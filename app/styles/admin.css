@@ -38,6 +38,9 @@
   height: 84vh;
   box-shadow: 0px 0px 5px 0px #0000002a;
 }
+.dash-content .table {
+  overflow-x: scroll;
+}
 
 .dash-logo {
   font-size: 24px;
