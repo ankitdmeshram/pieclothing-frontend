@@ -82,6 +82,18 @@ const Cart = () => {
     }
   };
 
+  const deleteCartById = async (userId, _id) => {
+    const response = await deleteCart(userId, _id);
+    if (response?.success) {
+      setCartList((prev) => {
+        const newCart = prev.filter((p) => p?._id != _id);
+        console.log(newCart);
+        return newCart;
+      });
+      console.log("Response 88", response);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -125,7 +137,7 @@ const Cart = () => {
                       <td>
                         <button
                           className="cncl-btn"
-                          onClick={() => deleteCart(userId, cart?._id)}
+                          onClick={() => deleteCartById(userId, cart?._id)}
                         >
                           X
                         </button>
