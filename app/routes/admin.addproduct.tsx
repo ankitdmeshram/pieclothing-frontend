@@ -3,7 +3,10 @@ import styles from "../styles/admin.css";
 import AdminSidebar from "~/component/adminSidebar";
 import { useEffect, useState } from "react";
 import { addProduct } from "~/controllers/productController";
+import isadmin from "~/component/isadmin";
 const AdminAddProduct = () => {
+  isadmin();
+
   const [productForm, setProductForm] = useState({
     name: "",
     category: [],

@@ -27,3 +27,11 @@ export const signUp = async (
     return "Something went wrong";
   }
 };
+
+//is admin
+export const isAdmin = async (uid: any) => {
+  try {
+    const body = { uid };
+    return await postAPI(`${domain}/api/auth/isadmin`, JSON.stringify(body));
+  } catch (err) {}
+};

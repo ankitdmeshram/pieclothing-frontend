@@ -4,8 +4,10 @@ import AdminHeader from "~/component/adminHeader";
 import { deleteProduct, getProducts } from "~/controllers/productController";
 import { useLoaderData, useNavigate } from "@remix-run/react";
 import { useEffect, useState } from "react";
+import isadmin from "~/component/isadmin";
 
 const AdminProducts = () => {
+  isadmin();
   const loaderData: any = useLoaderData();
   const navigate: any = useNavigate();
   const [products, setProducts] = useState([]);
@@ -26,8 +28,8 @@ const AdminProducts = () => {
       replace: true,
       relative: "path",
       state: { _id: _id },
-    })
-  }
+    });
+  };
 
   const deletePro = async (_id: any) => {
     try {
@@ -75,7 +77,9 @@ const AdminProducts = () => {
                       return (
                         <tr key={product?._id}>
                           <td width={10}>{index + 1}</td>
-                          <td onClick={() => navigateToEdit(product?._id)}>{product?.name}</td>
+                          <td onClick={() => navigateToEdit(product?._id)}>
+                            {product?.name}
+                          </td>
                           <td className="pro-price">
                             {product?.offerPrice > 0 ? (
                               <>
@@ -98,7 +102,12 @@ const AdminProducts = () => {
                             </button>
                           </td>
                           <td width={100}>
-                            <button className="edit" onClick={() => navigateToEdit(product?._id)}>Edit</button>
+                            <button
+                              className="edit"
+                              onClick={() => navigateToEdit(product?._id)}
+                            >
+                              Edit
+                            </button>
                             {/* </Form> */}
                           </td>
                         </tr>
