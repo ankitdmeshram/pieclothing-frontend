@@ -3,16 +3,31 @@ import Navbar from "~/component/navbar";
 import styles from "~/styles/cart.css";
 import { getCookie, setCookie } from "../utils/cookies";
 import { useEffect, useState } from "react";
-import { viewCart } from "~/controllers/cartController";
+import { deleteCart, viewCart } from "~/controllers/cartController";
 import { frontdomain } from "~/utils/domain";
 
 const Cart = () => {
   const [userId, setUserId] = useState("");
   const [cartList, setCartList] = useState([]);
+  const [cartTotal, setCartTotal] = useState(0);
 
   useEffect(() => {
     userDetails();
   }, []);
+
+  useEffect(() => {
+    {
+      setCartTotal(0);
+      cartList.length > 0 &&
+        cartList.map((cart) => {
+          if (cart?.offerPrice > 0) {
+            setCartTotal((total) => total + Number(cart?.offerPrice));
+          } else {
+            setCartTotal((total) => total + Number(cart?.price));
+          }
+        });
+    }
+  }, [cartList]);
 
   const userDetails = () => {
     getCookie("UD")
@@ -62,7 +77,7 @@ const Cart = () => {
     if (response) {
       console.log("response 57 ", response);
       if (response?.productList.length > 0) {
-        setCartList(response?.productList);
+        await setCartList(response?.productList);
       }
     }
   };
@@ -78,14 +93,17 @@ const Cart = () => {
               <th>Image</th>
               <th style={{ minWidth: "100%" }}>Item</th>
               <th>Price</th>
-              <th>X</th>
+              <th>Quantity</th>
+              <th>
+                <button className="cncl-btn">X </button>
+              </th>
             </tr>
           </thead>
           <tbody>
             {cartList.length > 0
-              ? cartList.map((cart) => {
+              ? cartList.map((cart, i) => {
                   return (
-                    <tr key={cart?._id}>
+                    <tr key={i}>
                       {/* <td>1</td> */}
                       <td>
                         <img
@@ -103,26 +121,29 @@ const Cart = () => {
                         Rs.{" "}
                         {cart?.offerPrice > 0 ? cart?.offerPrice : cart?.price}
                       </td>
-                      <td>X</td>
+                      <td>{cart?.quantity}</td>
+                      <td>
+                        <button
+                          className="cncl-btn"
+                          onClick={() => deleteCart(userId, cart?._id)}
+                        >
+                          X
+                        </button>
+                      </td>
                     </tr>
                   );
                 })
               : null}
           </tbody>
         </table>
-
-        {/* <div className="cart-container">
-            <div className="cart-list">
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam, nihil eveniet perspiciatis neque, aperiam veritatis laudantium labore officiis quod suscipit necessitatibus provident! Dolore, tempora voluptate impedit iusto voluptates reprehenderit deserunt.</p>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam, nihil eveniet perspiciatis neque, aperiam veritatis laudantium labore officiis quod suscipit necessitatibus provident! Dolore, tempora voluptate impedit iusto voluptates reprehenderit deserunt.</p>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam, nihil eveniet perspiciatis neque, aperiam veritatis laudantium labore officiis quod suscipit necessitatibus provident! Dolore, tempora voluptate impedit iusto voluptates reprehenderit deserunt.</p>
-            </div>
-            <div className="cart-total">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse obcaecati nisi nesciunt dolorem quae sed perspiciatis, adipisci neque distinctio delectus reprehenderit impedit praesentium repellat incidunt, repudiandae voluptatum architecto? Perferendis, ea.</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse obcaecati nisi nesciunt dolorem quae sed perspiciatis, adipisci neque distinctio delectus reprehenderit impedit praesentium repellat incidunt, repudiandae voluptatum architecto? Perferendis, ea.</p>
-            </div>
-        </div> */}
       </div>
+
+      {cartList.length > 0 && (
+        <div className="cart-total">
+          <h2> Total : {cartTotal}</h2>
+        </div>
+      )}
+
       <Footer />
     </>
   );

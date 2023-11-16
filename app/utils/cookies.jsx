@@ -8,7 +8,7 @@ export const setCookie = async (cname, cvalue, exday = null) => {
     exday = await d.toUTCString();
   }
   document.cookie =
-    (await cname) + "=" + cvalue + ";" + "expires=" + exday + ";";
+    (await cname) + "=" + cvalue + ";" + "expires=" + exday + ";path=/";
 };
 
 export async function getCookie(name) {

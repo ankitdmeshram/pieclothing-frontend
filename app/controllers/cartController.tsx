@@ -33,3 +33,16 @@ export const viewCart = (uid: string) => {
     console.log("Something went wrong", err);
   }
 };
+
+export const deleteCart = (uid: string, pid: string) => {
+  try {
+    const body = {
+      uid,
+      pid,
+    };
+    console.log(body);
+    return postAPI(`${domain}/api/cart/deletecart`, JSON.stringify(body));
+  } catch (err) {
+    console.log("Something went wrong", err);
+  }
+};
