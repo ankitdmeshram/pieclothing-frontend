@@ -21,9 +21,13 @@ const Cart = () => {
       cartList.length > 0 &&
         cartList.map((cart) => {
           if (cart?.offerPrice > 0) {
-            setCartTotal((total) => total + Number(cart?.offerPrice));
+            setCartTotal(
+              (total) => total + Number(cart?.offerPrice) * cart?.quantity
+            );
           } else {
-            setCartTotal((total) => total + Number(cart?.price));
+            setCartTotal(
+              (total) => total + Number(cart?.price) * cart?.quantity
+            );
           }
         });
     }

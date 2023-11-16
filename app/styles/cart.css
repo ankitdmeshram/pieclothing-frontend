@@ -5,7 +5,7 @@
 }
 .cart {
   margin-top: 100px;
-  margin-bottom: 100px;
+  margin-bottom: 20px;
   overflow-x: scroll;
 }
 .cart::-webkit-scrollbar {
@@ -41,11 +41,11 @@ table tr {
 }
 
 .cart-total {
-  margin-top: 100px;
-  margin-bottom: 100px;
   overflow-x: scroll;
   width: 85%;
   margin: auto;
+  text-align: right;
+  padding-bottom: 30px;
 }
 
 .cart-total::-webkit-scrollbar {
