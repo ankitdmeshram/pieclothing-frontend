@@ -15,13 +15,14 @@ const AdminSidebar = () => {
           <Link to={"../admin/addproduct"}>Add New Product</Link>
         </div>
         <div className="sidebar-menu">
-          <Link to={"./dashboard"}>Orders</Link>
+          <Link to={"../admin/cart"}>Carts</Link>
         </div>
-        {/* <div className="sidebar-menu">
-        <Link to={"./dashboard"}>Users Cart</Link>
-      </div> */}
         <div className="sidebar-menu">
-          <Link to={"./dashboard"}>Users</Link>
+          <Link to={"../admin/orders"}>Orders</Link>
+        </div>
+
+        <div className="sidebar-menu">
+          <Link to={"../admin/users"}>Users</Link>
         </div>
       </div>
     </div>
