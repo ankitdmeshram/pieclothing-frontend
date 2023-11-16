@@ -167,3 +167,26 @@
   padding: 10px;
   font-size: 14px;
 }
+
+.dash-ana {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+}
+
+.ana-box {
+  width: 22%;
+  height: 200px;
+  background-color: #f2f2f2;
+  margin: 10px;
+  text-align: center;
+}
+.ana-no {
+  font-size: 60px;
+  font-weight: 600;
+  padding-top: 50px;
+}
+.ana-title {
+  font-size: 24px;
+}
