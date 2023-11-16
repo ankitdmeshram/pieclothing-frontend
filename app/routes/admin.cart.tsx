@@ -3,11 +3,13 @@ import AdminSidebar from "~/component/adminSidebar";
 import isadmin from "~/component/isadmin";
 import styles from "../styles/admin.css";
 import { useEffect, useState } from "react";
-import { viewAllCart } from "~/controllers/cartController";
+import { deleteCartById, viewAllCart } from "~/controllers/cartController";
 
 const adminCart = () => {
   isadmin();
+
   const [cartDetails, setCartDetails] = useState([]);
+
   useEffect(() => {
     allCart();
   }, []);
@@ -16,7 +18,31 @@ const adminCart = () => {
     const response: any = await viewAllCart("");
     if (response.success) {
       console.log("response", response);
-      setCartDetails(response.cartDetails);
+
+      let cartU = response.cartDetails;
+      cartU.map((c: any) => {
+        let totalQuantity = 0;
+        c.products.forEach((p: any) => {
+          console.log(p, totalQuantity);
+          totalQuantity = totalQuantity + p.quantity;
+        });
+        c.totalQuantity = totalQuantity;
+      });
+      console.log("cartU", cartU);
+      setCartDetails(cartU);
+    }
+  };
+
+  const deleteFromCart = async (id: any) => {
+    const response: any = await deleteCartById(id);
+    if (response.success) {
+      setCartDetails((prev: any) => {
+        const cartU = prev.filter((p:any) => p._id != id);
+        return cartU;
+      });
+      alert("succes");
+    } else {
+      alert("failed");
     }
   };
 
@@ -33,11 +59,10 @@ const adminCart = () => {
                   <tr>
                     <th>Sr. No.</th>
                     <th>Name</th>
-                    <th>Price</th>
+                    <th>Total Items</th>
                     <th>Created At</th>
                     <th>Updated At</th>
                     <th>Delete</th>
-                    <th>Update</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -53,11 +78,17 @@ const adminCart = () => {
                                   cart.userDetails.lastName
                                 : "Unknown"}
                             </td>
-                            <td> </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{cart?.totalQuantity}</td>
+                            <td>{cart?.created_date}</td>
+                            <td>{cart?.updated_date}</td>
+                            <td width={100}>
+                              <button
+                                className="delete"
+                                onClick={() => deleteFromCart(cart?._id)}
+                              >
+                                Delete
+                              </button>
+                            </td>
                           </tr>
                         );
                       })

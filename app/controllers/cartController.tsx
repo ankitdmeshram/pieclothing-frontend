@@ -54,3 +54,18 @@ export const viewAllCart = (uid: string) => {
     console.log("Somethting went wrong", err);
   }
 };
+
+export const deleteCartById = (id: string) => {
+  try {
+    const body = {
+      id,
+    };
+    console.log(body);
+    return postAPI(
+      `${domain}/api/cart/deletecartbyidadmin`,
+      JSON.stringify(body)
+    );
+  } catch (err) {
+    console.log("Something went wrong", err);
+  }
+};
