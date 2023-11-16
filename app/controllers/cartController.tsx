@@ -46,3 +46,11 @@ export const deleteCart = (uid: string, pid: string) => {
     console.log("Something went wrong", err);
   }
 };
+
+export const viewAllCart = (uid: string) => {
+  try {
+    return postAPI(`${domain}/api/cart/viewAllCart`, uid);
+  } catch (err) {
+    console.log("Somethting went wrong", err);
+  }
+};

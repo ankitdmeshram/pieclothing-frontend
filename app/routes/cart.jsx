@@ -69,7 +69,7 @@ const Cart = () => {
               tempUser += allChars.charAt(randomIndex);
             }
 
-            setCookie("TUD 44", tempUser);
+            setCookie("TUD", tempUser);
             setUserId(tempUser);
             viewCartById(tempUser);
           });
