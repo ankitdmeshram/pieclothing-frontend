@@ -120,7 +120,24 @@ const AdminEditProduct = () => {
                     <p className="tags-name">
                       {productForm?.category.length > 0 &&
                         productForm?.category.map((cat: any, index) => {
-                          return <span key={index}>{cat}</span>;
+                          return (
+                            <span
+                              key={index}
+                              onClick={() => {
+                                setProductForm((prev: any) => {
+                                  const newCat = prev.category.filter(
+                                    (c: any) => c != cat
+                                  );
+                                  return {
+                                    ...prev,
+                                    category: newCat,
+                                  };
+                                });
+                              }}
+                            >
+                              {cat}
+                            </span>
+                          );
                         })}
                     </p>
                   )}
@@ -172,7 +189,24 @@ const AdminEditProduct = () => {
                     <p className="tags-name">
                       {productForm?.size.length > 0 &&
                         productForm?.size.map((size: any, index) => {
-                          return <span key={index}>{size}</span>;
+                          return (
+                            <span
+                              key={index}
+                              onClick={() => {
+                                setProductForm((prev: any) => {
+                                  const newSize = prev.size.filter(
+                                    (s: any) => s != size
+                                  );
+                                  return {
+                                    ...prev,
+                                    size: newSize,
+                                  };
+                                });
+                              }}
+                            >
+                              {size}
+                            </span>
+                          );
                         })}
                     </p>
                   )}
@@ -209,7 +243,24 @@ const AdminEditProduct = () => {
                     <p className="tags-name">
                       {productForm?.color.length > 0 &&
                         productForm?.color.map((color: any, index) => {
-                          return <span key={index}>{color}</span>;
+                          return (
+                            <span
+                              key={index}
+                              onClick={() => {
+                                setProductForm((prev: any) => {
+                                  const newColor = prev.color.filter(
+                                    (c: any) => c != color
+                                  );
+                                  return {
+                                    ...prev,
+                                    color: newColor,
+                                  };
+                                });
+                              }}
+                            >
+                              {color}
+                            </span>
+                          );
                         })}
                     </p>
                   )}
@@ -313,13 +364,30 @@ const AdminEditProduct = () => {
                     <p className="tags-name">
                       {productForm?.seo_keywords.length > 0 &&
                         productForm?.seo_keywords.map((keyword: any, index) => {
-                          return <span key={index}>{keyword}</span>;
+                          return (
+                            <span
+                              key={index}
+                              onClick={() => {
+                                setProductForm((prev: any) => {
+                                  const newKeyword = prev.seo_keywords.filter(
+                                    (k: any) => k != keyword
+                                  );
+                                  return {
+                                    ...prev,
+                                    seo_keywords: newKeyword,
+                                  };
+                                });
+                              }}
+                            >
+                              {keyword}
+                            </span>
+                          );
                         })}
                     </p>
                   )}
                 </div>
                 <button className="submit-btn" onClick={() => editPro()}>
-                  Add Product
+                  Update Product
                 </button>
               </div>
             </div>
