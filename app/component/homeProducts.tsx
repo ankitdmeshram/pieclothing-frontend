@@ -1,18 +1,16 @@
-import { useLoaderData, useNavigate } from "@remix-run/react";
-import { useEffect, useState } from "react";
+import { useNavigate } from "@remix-run/react";
+import { useState } from "react";
 
 const HomeProducts = () => {
-  const loaderData: any = useLoaderData();
+  // const loaderData: any = useLoaderData();
   const navigate: any = useNavigate();
 
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    if (loaderData?.products) {
-      console.log(loaderData?.products);
-      setProducts(loaderData?.products);
-    }
-  }, [loaderData]);
+  const [products, setProducts] = useState([
+    "shirt",
+    "tshirt",
+    "hoodie",
+    "jeans",
+  ]);
 
   return (
     <>
@@ -22,8 +20,14 @@ const HomeProducts = () => {
             return (
               <div
                 className="card"
-                key={product?._id}
-                onClick={() => navigate(`./product/${product?._id}`)}
+                key={product}
+                onClick={() =>
+                  navigate(`./products`, {
+                    replace: true,
+                    relative: "path",
+                    state: { ptype: product },
+                  })
+                }
               >
                 <img
                   className="product-image"

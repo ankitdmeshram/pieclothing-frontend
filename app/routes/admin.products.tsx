@@ -64,6 +64,7 @@ const AdminProducts = () => {
                   <tr>
                     <th>Sr. No.</th>
                     <th>Name</th>
+                    <th>Type</th>
                     <th>Price</th>
                     <th>Created At</th>
                     <th>Updated At</th>
@@ -80,6 +81,7 @@ const AdminProducts = () => {
                           <td onClick={() => navigateToEdit(product?._id)}>
                             {product?.name}
                           </td>
+                          <td>{product?.type}</td>
                           <td className="pro-price">
                             {product?.offerPrice > 0 ? (
                               <>

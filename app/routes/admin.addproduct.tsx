@@ -11,6 +11,7 @@ const AdminAddProduct = () => {
     name: "",
     category: [],
     description: "",
+    type: "",
     size: [],
     color: [],
     price: 0,
@@ -126,6 +127,22 @@ const AdminAddProduct = () => {
                     </p>
                   )}
                 </div>
+                <div className="input-box">
+                  <label>Product Type: </label>
+                  <input
+                    placeholder="Product Type"
+                    type="text"
+                    onChange={(e) =>
+                      setProductForm((prev: any) => {
+                        return {
+                          ...prev,
+                          type: e.target.value,
+                        };
+                      })
+                    }
+                  />
+                </div>
+
                 <div className="input-box">
                   <label>Description: </label>
                   <textarea
