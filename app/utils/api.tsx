@@ -44,3 +44,24 @@ export const getAPI = (url: string) => {
     return e;
   }
 };
+
+export const imageUploadAPI = async (url: string, selectedFile: any) => {
+  try {
+    const formData = new FormData();
+    formData.append("images", selectedFile);
+
+    const response: any = await fetch(`${url}`, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (response?.success) {
+      const data = await response.json();
+      console.log("File uploaded successfully:", data);
+    } else {
+      console.error("Error uploading file");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};

@@ -2,8 +2,10 @@ import AdminHeader from "~/component/adminHeader";
 import styles from "../styles/admin.css";
 import AdminSidebar from "~/component/adminSidebar";
 import { useEffect, useState } from "react";
-import { addProduct } from "~/controllers/productController";
+import { addProduct, imageUpload } from "~/controllers/productController";
 import isadmin from "~/component/isadmin";
+import { imageUploadAPI } from "~/utils/api";
+import { domain } from "~/utils/domain";
 const AdminAddProduct = () => {
   isadmin();
 
@@ -149,7 +151,20 @@ const AdminAddProduct = () => {
                     }
                   />
                 </div>
-
+                <div className="input-box">
+                  <label>Image Upload</label>
+                  <input
+                    type="file"
+                    name="images"
+                    onChange={(e: any) =>
+                      imageUploadAPI(
+                        `${domain}/api/product/uploadimg`,
+                        e.target.files[0]
+                      )
+                    }
+                    multiple
+                  />
+                </div>
                 <div className="input-box">
                   <label>Description: </label>
                   <textarea
