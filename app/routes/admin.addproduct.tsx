@@ -35,6 +35,29 @@ const AdminAddProduct = () => {
     console.log(productForm);
   }, [productForm]);
 
+  const addImg = async (e: any) => {
+    const formData = new FormData();
+
+    console.log("e", typeof e.target.files, e.target.files.length);
+    const ee = e.target.files;
+    console.log("eeee", ee);
+
+    for (let i = 0; i < ee.length; i++) {
+      formData.append("images", e.target.files[i]);
+    }
+
+    // Object.keys(e.target.files).map((i: any) => {
+    //   console.log(i);
+    //   formData.append("images", i);
+    // });
+
+    const response = await imageUploadAPI(
+      `${domain}/api/product/uploadimg`,
+      formData
+    );
+    console.log("Response", response);
+  };
+
   const addPro = async () => {
     try {
       if (productForm?.name && productForm?.price) {
@@ -156,11 +179,12 @@ const AdminAddProduct = () => {
                   <input
                     type="file"
                     name="images"
-                    onChange={(e: any) =>
-                      imageUploadAPI(
-                        `${domain}/api/product/uploadimg`,
-                        e.target.files[0]
-                      )
+                    onChange={
+                      (e: any) => addImg(e)
+                      // imageUploadAPI(
+                      //   `${domain}/api/product/uploadimg`,
+                      //   e.target.files[0]
+                      // )
                     }
                     multiple
                   />

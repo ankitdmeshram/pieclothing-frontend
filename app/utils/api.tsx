@@ -47,12 +47,12 @@ export const getAPI = (url: string) => {
 
 export const imageUploadAPI = async (url: string, selectedFile: any) => {
   try {
-    const formData = new FormData();
-    formData.append("images", selectedFile);
+    // const formData = new FormData();
+    // formData.append("images", selectedFile);
 
     const response: any = await fetch(`${url}`, {
       method: "POST",
-      body: formData,
+      body: selectedFile,
     });
 
     if (response?.success) {
