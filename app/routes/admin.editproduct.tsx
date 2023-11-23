@@ -24,7 +24,10 @@ const AdminEditProduct = () => {
     seo_keywords: [],
   });
   const [productCategory, setProductCategory] = useState("");
-  const [size, setSize] = useState("");
+  const [size, setSize] = useState({
+    size: "",
+    quantity: 0,
+  });
   const [color, setColor] = useState("");
   const [seo_keywords, setSeo_Keyword] = useState("");
 
@@ -181,51 +184,98 @@ const AdminEditProduct = () => {
                       placeholder="Size"
                       type="text"
                       onChange={(e) => {
-                        setSize(e.target.value);
+                        setSize((prev: any) => {
+                          return { ...prev, size: e.target.value };
+                        });
                       }}
-                      value={size}
+                      value={size?.size}
+                      style={{ width: "44%" }}
                     />
+                    <input
+                      placeholder="Quantity"
+                      type="text"
+                      onChange={(e) => {
+                        setSize((prev: any) => {
+                          return { ...prev, quantity: e.target.value };
+                        });
+                      }}
+                      style={{ width: "44%" }}
+                      value={size?.quantity}
+                    />
+
                     <button
                       className="pro-form-btn"
                       onClick={() => {
-                        size.length > 0 &&
-                          setProductForm((prev: any) => {
-                            const newFormData = {
-                              ...prev,
-                              size: [...prev.size, size],
-                            };
-                            setSize("");
-                            return newFormData;
-                          });
+                        const newSize = [...productForm.size, size];
+                        console.log("newSize", newSize);
+
+                        setProductForm((prev: any) => {
+                          return {
+                            ...prev,
+                            size: newSize,
+                          };
+                        });
+                        setSize({
+                          size: "",
+                          quantity: 0,
+                        });
                       }}
                     >
                       Add
                     </button>
                   </div>
                   {productForm?.size.length > 0 && (
-                    <p className="tags-name">
-                      {productForm?.size.length > 0 &&
-                        productForm?.size.map((size: any, index) => {
+                    <table
+                      border={1}
+                      style={{ width: "100%", textAlign: "center" }}
+                    >
+                      <thead>
+                        <tr>
+                          <th>Size</th>
+                          <th>Quantity</th>
+                          <th>X</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {productForm?.size.map((size: any, index) => {
                           return (
-                            <span
-                              key={index}
-                              onClick={() => {
-                                setProductForm((prev: any) => {
-                                  const newSize = prev.size.filter(
-                                    (s: any) => s != size
-                                  );
-                                  return {
-                                    ...prev,
-                                    size: newSize,
-                                  };
-                                });
-                              }}
-                            >
-                              {size}
-                            </span>
+                            // <div key={index}>
+                            //   <span
+                            //     onClick={() => {
+                            //       setProductForm((prev: any) => {
+                            //         const newSize = prev.size.filter(
+                            //           (s: any) => s != size
+                            //         );
+                            //         return {
+                            //           ...prev,
+                            //           size: newSize,
+                            //         };
+                            //       });
+                            //     }}
+                            //   >
+                            <tr key={index}>
+                              <td>{size?.size}</td>
+                              <td>{size?.quantity}</td>
+                              <td
+                                onClick={() => {
+                                  setProductForm((prev: any) => {
+                                    const newSize = prev.size.filter(
+                                      (s: any) => s != size
+                                    );
+                                    return {
+                                      ...prev,
+                                      size: newSize,
+                                    };
+                                  });
+                                }}
+                              >
+                                X
+                              </td>
+                            </tr>
                           );
                         })}
-                    </p>
+                      </tbody>
+                    </table>
                   )}
                 </div>
                 <div className="input-box">

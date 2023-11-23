@@ -21,6 +21,7 @@ const Product = () => {
   });
   const [whichBtn, setWhichBtn] = useState("add");
   const [imgUrl, setImgUrl] = useState(`${frontdomain}/images/image3.webp`);
+  const [msg, setMsg] = useState("");
 
   useEffect(() => {
     console.log("Loaderdata", loaderData);
@@ -135,9 +136,6 @@ const Product = () => {
   return (
     <>
       <Navbar />
-      {/* <div style={{ background: '#D6D7DB', height: '200px' }}>
-                <h2 style={{ textAlign: 'center', paddingTop: '100px', fontSize: '36px', color: 'white' }}>All Products</h2>
-            </div> */}
       <div className="singleProduct">
         <div className="pro-main">
           <div className="pro-img">
@@ -185,40 +183,63 @@ const Product = () => {
             <div className="size">
               {productDetails?.size?.length > 0 &&
                 productDetails?.size.map((s, i) => {
-                  return forCart?.size == s ? (
+                  return forCart?.size == s?.size ? (
                     <div
                       style={{ border: "3px solid black" }}
                       className="box"
                       key={i}
                       onClick={() => {
-                        setForCart((prev) => {
-                          return {
-                            ...prev,
-                            size: s,
-                          };
-                        });
+                        if (s?.quantity == 0) {
+                          setMsg("Currently Unavailable");
+                          setForCart((prev) => {
+                            return {
+                              ...prev,
+                              size: "",
+                            };
+                          });
+                        } else {
+                          setMsg("");
+                          setForCart((prev) => {
+                            return {
+                              ...prev,
+                              size: s?.size,
+                            };
+                          });
+                        }
                       }}
                     >
-                      {s}{" "}
+                      {s?.size}{" "}
                     </div>
                   ) : (
                     <div
                       className="box"
                       key={i}
                       onClick={() => {
-                        setForCart((prev) => {
-                          return {
-                            ...prev,
-                            size: s,
-                          };
-                        });
+                        if (s?.quantity == 0) {
+                          setMsg("Currently Unavailable");
+                          setForCart((prev) => {
+                            return {
+                              ...prev,
+                              size: "",
+                            };
+                          });
+                        } else {
+                          setMsg("");
+                          setForCart((prev) => {
+                            return {
+                              ...prev,
+                              size: s?.size,
+                            };
+                          });
+                        }
                       }}
                     >
-                      {s}
+                      {s?.size}
                     </div>
                   );
                 })}
             </div>
+            {msg && <p style={{ color: "red" }}>{msg}</p>}
 
             {productDetails?.color?.length > 0 && (
               <p style={{ paddingTop: "10px", fontWeight: "600" }}>color</p>
