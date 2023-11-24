@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { addProduct, imageUpload } from "~/controllers/productController";
 import isadmin from "~/component/isadmin";
 import { imageUploadAPI } from "~/utils/api";
-import { domain } from "~/utils/domain";
+import { uploadServer } from "~/utils/domain";
 const AdminAddProduct = () => {
   isadmin();
 
@@ -46,7 +46,7 @@ const AdminAddProduct = () => {
     }
 
     const response: any = await imageUploadAPI(
-      `${domain}/api/product/uploadimg`,
+      `${uploadServer}/api/product/uploadimg`,
       formData
     );
     console.log(response);
@@ -203,7 +203,7 @@ const AdminAddProduct = () => {
                                 };
                               });
                           }}
-                          src={`${domain}/imgs/${img}`}
+                          src={`${uploadServer}/imgs/${img}`}
                           width="100"
                         />
                       );

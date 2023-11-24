@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { singleProduct, updateProduct } from "~/controllers/productController";
 import { useLocation } from "@remix-run/react";
 import isadmin from "~/component/isadmin";
-import { domain } from "~/utils/domain";
+import { uploadServer } from "~/utils/domain";
 import { imageUploadAPI } from "~/utils/api";
 const AdminEditProduct = () => {
   isadmin();
@@ -80,7 +80,7 @@ const AdminEditProduct = () => {
     }
 
     const response: any = await imageUploadAPI(
-      `${domain}/api/product/uploadimg`,
+      `${uploadServer}/api/product/uploadimg`,
       formData
     );
     console.log(response);
@@ -217,7 +217,7 @@ const AdminEditProduct = () => {
                                 };
                               });
                           }}
-                          src={`${domain}/imgs/${img}`}
+                          src={`${uploadServer}/imgs/${img}`}
                           width="100"
                         />
                       );

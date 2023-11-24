@@ -3,3 +3,5 @@
 
 export const frontdomain = "https://pieclothing.in"
 export const domain = "https://backend.pieclothing.in"
+
+export const uploadServer = "https://backend.pieclothing.in"

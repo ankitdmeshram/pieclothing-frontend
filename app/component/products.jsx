@@ -33,12 +33,22 @@ const Products = ({ ptype }) => {
             return (
               <Link to={`../product/${product?._id}`} key={product?._id}>
                 <div className="card">
-                  <img
-                    className="product-image"
-                    src={`${domain}/imgs/${product?.gallery[0]}`}
-                    alt=""
-                    loading="lazy"
-                  />
+                  {product?.gallery.length > 0 ? (
+                    <img
+                      className="product-image"
+                      src={`${domain}/imgs/${product?.gallery[0]}`}
+                      alt=""
+                      loading="lazy"
+                    />
+                  ) : (
+                    <img
+                      className="product-image"
+                      src={`${domain}/imgs/1700847513859.png}`}
+                      alt=""
+                      loading="lazy"
+                    />
+                  )}
+
                   <h1>{product?.name}</h1>
                   <p className="pricing">
                     {product?.offerPrice > 0 ? (
