@@ -5,7 +5,7 @@ import { addCart } from "../controllers/cartController";
 import singleProductStyle from "../styles/singleProduct.css";
 import Navbar from "~/component/navbar";
 import { getCookie, setCookie } from "../utils/cookies";
-import { frontdomain } from "../utils/domain";
+import { domain, uploadServer } from "../utils/domain";
 
 const Product = () => {
   const loaderData = useLoaderData();
@@ -20,12 +20,15 @@ const Product = () => {
     color: "",
   });
   const [whichBtn, setWhichBtn] = useState("add");
-  const [imgUrl, setImgUrl] = useState(`${frontdomain}/images/image3.webp`);
+  const [imgUrl, setImgUrl] = useState(
+    `${uploadServer}/imgs/1700847513859.png`
+  );
   const [msg, setMsg] = useState("");
 
   useEffect(() => {
     console.log("Loaderdata", loaderData);
     setProductDetails(loaderData?.product);
+    setImgUrl(`${uploadServer}/imgs/${loaderData?.product?.gallery[0]}`);
     setForCart((prev) => {
       return {
         ...prev,
@@ -142,26 +145,16 @@ const Product = () => {
             <img className="main-img" src={imgUrl} alt={productDetails?.name} />
 
             <div className="img-thumb">
-              <img
-                src={`${frontdomain}/images/image3.webp`}
-                alt="test"
-                onClick={() => setImgUrl(`${frontdomain}/images/image3.webp`)}
-              />
-              <img
-                src={`${frontdomain}/images/image4.webp`}
-                alt="test"
-                onClick={() => setImgUrl(`${frontdomain}/images/image4.webp`)}
-              />
-              <img
-                src={`${frontdomain}/images/image5.webp`}
-                alt="test"
-                onClick={() => setImgUrl(`${frontdomain}/images/image5.webp`)}
-              />
-              <img
-                src={`${frontdomain}/images/image6.webp`}
-                alt="test"
-                onClick={() => setImgUrl(`${frontdomain}/images/image6.webp`)}
-              />
+              {productDetails?.gallery && productDetails?.gallery.length > 0
+                ? productDetails.gallery.map((img) => (
+                    <img
+                      key={img}
+                      src={`${uploadServer}/imgs/${img}`}
+                      alt="test"
+                      onClick={() => setImgUrl(`${uploadServer}/imgs/${img}`)}
+                    />
+                  ))
+                : null}
             </div>
           </div>
 

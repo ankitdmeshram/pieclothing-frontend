@@ -7,10 +7,10 @@ const HomeProducts = () => {
   const navigate: any = useNavigate();
 
   const [products, setProducts] = useState([
-    { type: "shirt", img: `${domain}/imgs/1700709880791.jpeg` },
-    { type: "tshirt", img: "images/img3.png" },
-    { type: "hoodie", img: "images/img4.png" },
-    { type: "jeans", img: "images/img1.png" },
+    { type: "tshirt", img: `${domain}/imgs/1700849106800.png` },
+    { type: "hoodie", img: `${domain}/imgs/1700849251732.png` },
+    { type: "shirt", img: `${domain}/imgs/1700849319387.png` },
+    { type: "sweartshirt", img: `${domain}/imgs/1700849395085.png` },
   ]);
 
   return (
@@ -26,14 +26,14 @@ const HomeProducts = () => {
                   navigate(`./products`, {
                     replace: true,
                     relative: "path",
-                    state: { ptype: product.type },
+                    state: { ptype: product?.type },
                   })
                 }
               >
                 <img
                   className="product-image"
                   src={product?.img}
-                  alt=""
+                  alt={product?.type}
                   loading="lazy"
                 />
               </div>
