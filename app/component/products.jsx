@@ -1,5 +1,6 @@
 import { Link, useLoaderData } from "@remix-run/react";
 import { useEffect, useState } from "react";
+import { domain } from "~/utils/domain";
 // import { getProducts } from "~/controllers/productController";
 
 const Products = ({ ptype }) => {
@@ -34,7 +35,7 @@ const Products = ({ ptype }) => {
                 <div className="card">
                   <img
                     className="product-image"
-                    src="./images/image3.webp"
+                    src={`${domain}/imgs/${product?.gallery[0]}`}
                     alt=""
                     loading="lazy"
                   />

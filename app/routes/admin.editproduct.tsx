@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { singleProduct, updateProduct } from "~/controllers/productController";
 import { useLocation } from "@remix-run/react";
 import isadmin from "~/component/isadmin";
+import { domain } from "~/utils/domain";
+import { imageUploadAPI } from "~/utils/api";
 const AdminEditProduct = () => {
   isadmin();
 
@@ -65,6 +67,32 @@ const AdminEditProduct = () => {
       alert("Something went wrong");
       console.log("Something went wrong", error);
     }
+  };
+
+  const addImg = async (e: any) => {
+    const formData = new FormData();
+
+    const ee = e.target.files;
+    console.log("eeee", ee);
+
+    for (let i = 0; i < ee.length; i++) {
+      formData.append("images", e.target.files[i]);
+    }
+
+    const response: any = await imageUploadAPI(
+      `${domain}/api/product/uploadimg`,
+      formData
+    );
+    console.log(response);
+    if (response.success) {
+      setProductForm((prev: any) => {
+        return {
+          ...prev,
+          gallery: [...prev.gallery, ...response?.filename],
+        };
+      });
+    }
+    console.log("Response", response);
   };
 
   return (
@@ -161,6 +189,39 @@ const AdminEditProduct = () => {
                       })
                     }
                   />
+                </div>
+                <div className="input-box">
+                  <label>Image Upload</label>
+                  <input
+                    type="file"
+                    name="images"
+                    onChange={(e: any) => addImg(e)}
+                    multiple
+                  />
+
+                  {productForm?.gallery.length > 0 &&
+                    productForm?.gallery.map((img: any) => {
+                      console.log(img);
+                      return (
+                        <img
+                          key={img}
+                          onClick={() => {
+                            confirm("Are you sure you want to delete  ?") &&
+                              setProductForm((prev: any) => {
+                                const newImg = prev.gallery.filter(
+                                  (g: any) => g != img
+                                );
+                                return {
+                                  ...prev,
+                                  gallery: newImg,
+                                };
+                              });
+                          }}
+                          src={`${domain}/imgs/${img}`}
+                          width="100"
+                        />
+                      );
+                    })}
                 </div>
                 <div className="input-box">
                   <label>Description: </label>

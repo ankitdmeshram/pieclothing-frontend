@@ -38,7 +38,6 @@ const AdminAddProduct = () => {
   const addImg = async (e: any) => {
     const formData = new FormData();
 
-    console.log("e", typeof e.target.files, e.target.files.length);
     const ee = e.target.files;
     console.log("eeee", ee);
 
@@ -46,15 +45,19 @@ const AdminAddProduct = () => {
       formData.append("images", e.target.files[i]);
     }
 
-    // Object.keys(e.target.files).map((i: any) => {
-    //   console.log(i);
-    //   formData.append("images", i);
-    // });
-
-    const response = await imageUploadAPI(
+    const response: any = await imageUploadAPI(
       `${domain}/api/product/uploadimg`,
       formData
     );
+    console.log(response);
+    if (response.success) {
+      setProductForm((prev: any) => {
+        return {
+          ...prev,
+          gallery: [...prev.gallery, ...response?.filename],
+        };
+      });
+    }
     console.log("Response", response);
   };
 
@@ -179,15 +182,32 @@ const AdminAddProduct = () => {
                   <input
                     type="file"
                     name="images"
-                    onChange={
-                      (e: any) => addImg(e)
-                      // imageUploadAPI(
-                      //   `${domain}/api/product/uploadimg`,
-                      //   e.target.files[0]
-                      // )
-                    }
+                    onChange={(e: any) => addImg(e)}
                     multiple
                   />
+                  {productForm?.gallery.length > 0 &&
+                    productForm?.gallery.map((img: any) => {
+                      console.log(img);
+                      return (
+                        <img
+                          key={img}
+                          onClick={() => {
+                            confirm("Are you sure you want to delete  ?") &&
+                              setProductForm((prev: any) => {
+                                const newImg = prev.gallery.filter(
+                                  (g: any) => g != img
+                                );
+                                return {
+                                  ...prev,
+                                  gallery: newImg,
+                                };
+                              });
+                          }}
+                          src={`${domain}/imgs/${img}`}
+                          width="100"
+                        />
+                      );
+                    })}
                 </div>
                 <div className="input-box">
                   <label>Description: </label>
