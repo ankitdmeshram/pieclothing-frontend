@@ -5,7 +5,9 @@ import { addCart } from "../controllers/cartController";
 import singleProductStyle from "../styles/singleProduct.css";
 import Navbar from "~/component/navbar";
 import { getCookie, setCookie } from "../utils/cookies";
+import SideCart from "~/component/sideCart";
 import { domain, imgServer } from "../utils/domain";
+import sideCartStyle from "../styles/sidecart.css";
 
 const Product = () => {
   const loaderData = useLoaderData();
@@ -20,10 +22,9 @@ const Product = () => {
     color: "",
   });
   const [whichBtn, setWhichBtn] = useState("add");
-  const [imgUrl, setImgUrl] = useState(
-    `${imgServer}/imgs/1700847513859.png`
-  );
+  const [imgUrl, setImgUrl] = useState(`${imgServer}/imgs/1700847513859.png`);
   const [msg, setMsg] = useState("");
+  const [showCart, setShowCart] = useState(false);
 
   useEffect(() => {
     console.log("Loaderdata", loaderData);
@@ -133,11 +134,13 @@ const Product = () => {
 
     if (cartResponse?.success) {
       setWhichBtn("view");
+      setShowCart(true);
     }
   };
 
   return (
     <>
+      <SideCart isShowCart={showCart} />
       <Navbar />
       <div className="singleProduct">
         <div className="pro-main">
@@ -343,5 +346,9 @@ export const links = () => [
   {
     rel: "stylesheet",
     href: singleProductStyle,
+  },
+  {
+    rel: "stylesheet",
+    href: sideCartStyle,
   },
 ];
