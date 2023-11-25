@@ -5,7 +5,7 @@ import { addCart } from "../controllers/cartController";
 import singleProductStyle from "../styles/singleProduct.css";
 import Navbar from "~/component/navbar";
 import { getCookie, setCookie } from "../utils/cookies";
-import { domain, uploadServer } from "../utils/domain";
+import { domain, imgServer } from "../utils/domain";
 
 const Product = () => {
   const loaderData = useLoaderData();
@@ -21,14 +21,14 @@ const Product = () => {
   });
   const [whichBtn, setWhichBtn] = useState("add");
   const [imgUrl, setImgUrl] = useState(
-    `${uploadServer}/imgs/1700847513859.png`
+    `${imgServer}/imgs/1700847513859.png`
   );
   const [msg, setMsg] = useState("");
 
   useEffect(() => {
     console.log("Loaderdata", loaderData);
     setProductDetails(loaderData?.product);
-    setImgUrl(`${uploadServer}/imgs/${loaderData?.product?.gallery[0]}`);
+    setImgUrl(`${imgServer}/imgs/${loaderData?.product?.gallery[0]}`);
     setForCart((prev) => {
       return {
         ...prev,
@@ -149,9 +149,9 @@ const Product = () => {
                 ? productDetails.gallery.map((img) => (
                     <img
                       key={img}
-                      src={`${uploadServer}/imgs/${img}`}
+                      src={`${imgServer}/imgs/${img}`}
                       alt="test"
-                      onClick={() => setImgUrl(`${uploadServer}/imgs/${img}`)}
+                      onClick={() => setImgUrl(`${imgServer}/imgs/${img}`)}
                     />
                   ))
                 : null}
@@ -290,15 +290,33 @@ const Product = () => {
             <div className="buy-now">Buy Now</div>
             {productDetails?.description && (
               <div className="decription">
-                <p style={{ paddingTop: "15px", fontWeight: "600" }}>
-                  Description:
-                </p>
-                <p
-                  style={{ paddingTop: "15px" }}
-                  dangerouslySetInnerHTML={{
-                    __html: productDetails?.description,
-                  }}
-                ></p>
+                <details>
+                  <summary style={{ paddingTop: "15px", fontWeight: "600" }}>
+                    Description:
+                  </summary>
+                  <p
+                    style={{ paddingTop: "15px" }}
+                    dangerouslySetInnerHTML={{
+                      __html: productDetails?.description,
+                    }}
+                  ></p>
+                </details>
+              </div>
+            )}
+
+            {productDetails?.washcare && (
+              <div className="decription">
+                <details>
+                  <summary style={{ paddingTop: "15px", fontWeight: "600" }}>
+                    Wash Care:
+                  </summary>
+                  <p
+                    style={{ paddingTop: "15px" }}
+                    dangerouslySetInnerHTML={{
+                      __html: productDetails?.washcare,
+                    }}
+                  ></p>
+                </details>
               </div>
             )}
           </div>

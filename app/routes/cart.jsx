@@ -4,7 +4,7 @@ import styles from "~/styles/cart.css";
 import { getCookie, setCookie } from "../utils/cookies";
 import { useEffect, useState } from "react";
 import { deleteCart, viewCart } from "~/controllers/cartController";
-import { frontdomain, uploadServer } from "~/utils/domain";
+import { frontdomain, imgServer } from "~/utils/domain";
 
 const Cart = () => {
   const [userId, setUserId] = useState("");
@@ -125,8 +125,8 @@ const Cart = () => {
                         <img
                           src={
                             cart?.gallery?.length > 0
-                              ? `${uploadServer}/imgs/${cart?.gallery[0]}`
-                              : `${uploadServer}/imgs/1700847513859.png`
+                              ? `${imgServer}/imgs/${cart?.gallery[0]}`
+                              : `${imgServer}/imgs/1700847513859.png`
                           }
                           width={50}
                           alt="{cart?.name}"

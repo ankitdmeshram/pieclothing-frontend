@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { singleProduct, updateProduct } from "~/controllers/productController";
 import { useLocation } from "@remix-run/react";
 import isadmin from "~/component/isadmin";
-import { uploadServer } from "~/utils/domain";
+import { imgServer } from "~/utils/domain";
 import { imageUploadAPI } from "~/utils/api";
 import { Editor } from "primereact/editor";
 
@@ -17,6 +17,7 @@ const AdminEditProduct = () => {
     name: "",
     category: [],
     description: "",
+    washcare: "",
     type: "",
     size: [],
     color: [],
@@ -82,7 +83,7 @@ const AdminEditProduct = () => {
     }
 
     const response: any = await imageUploadAPI(
-      `${uploadServer}/api/product/uploadimg`,
+      `${imgServer}/api/product/uploadimg`,
       formData
     );
     console.log(response);
@@ -219,7 +220,7 @@ const AdminEditProduct = () => {
                                 };
                               });
                           }}
-                          src={`${uploadServer}/imgs/${img}`}
+                          src={`${imgServer}/imgs/${img}`}
                           width="100"
                         />
                       );
@@ -236,18 +237,18 @@ const AdminEditProduct = () => {
                     }
                     style={{ height: "200px" }}
                   />
-                  {/* <textarea
-                    placeholder="Description"
-                    onChange={(e) =>
-                      setProductForm((prev) => {
-                        return {
-                          ...prev,
-                          description: e.target.value,
-                        };
+                </div>
+                <div className="input-box">
+                  <label>Wash Care: </label>
+                  <Editor
+                    value={productForm?.washcare}
+                    onTextChange={(e) =>
+                      setProductForm((prev: any) => {
+                        return { ...prev, washcare: e.htmlValue };
                       })
                     }
-                    value={productForm?.description}
-                  ></textarea> */}
+                    style={{ height: "200px" }}
+                  />
                 </div>
                 <div className="input-box">
                   <label>Size: </label>

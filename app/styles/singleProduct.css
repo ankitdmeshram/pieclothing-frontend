@@ -76,7 +76,7 @@
 }
 
 .decription {
-  padding: 10px 0px 20px 0px;
+  /* padding: 10px 0px 20px 0px; */
   font-size: 18px;
 }
 .img-thumb {
@@ -119,4 +119,11 @@
   .buy-now {
     width: 100%;
   }
+}
+
+summary {
+  margin-left: -15px;
+}
+summary::marker {
+  color: white;
 }

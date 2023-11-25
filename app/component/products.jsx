@@ -1,6 +1,6 @@
 import { Link, useLoaderData } from "@remix-run/react";
 import { useEffect, useState } from "react";
-import { domain } from "~/utils/domain";
+import { imgServer } from "~/utils/domain";
 // import { getProducts } from "~/controllers/productController";
 
 const Products = ({ ptype }) => {
@@ -36,14 +36,14 @@ const Products = ({ ptype }) => {
                   {product?.gallery.length > 0 ? (
                     <img
                       className="product-image"
-                      src={`${domain}/imgs/${product?.gallery[0]}`}
+                      src={`${imgServer}/imgs/${product?.gallery[0]}`}
                       alt=""
                       loading="lazy"
                     />
                   ) : (
                     <img
                       className="product-image"
-                      src={`${domain}/imgs/1700847513859.png`}
+                      src={`${imgServer}/imgs/1700847513859.png`}
                       alt=""
                       loading="lazy"
                     />

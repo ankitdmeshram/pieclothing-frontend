@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { addProduct, imageUpload } from "~/controllers/productController";
 import isadmin from "~/component/isadmin";
 import { imageUploadAPI } from "~/utils/api";
-import { uploadServer } from "~/utils/domain";
+import { imgServer } from "~/utils/domain";
 import { Editor } from "primereact/editor";
 
 const AdminAddProduct = () => {
@@ -15,6 +15,7 @@ const AdminAddProduct = () => {
     name: "",
     category: [],
     description: "",
+    washcare: "",
     type: "",
     size: [],
     color: [],
@@ -48,7 +49,7 @@ const AdminAddProduct = () => {
     }
 
     const response: any = await imageUploadAPI(
-      `${uploadServer}/api/product/uploadimg`,
+      `${imgServer}/api/product/uploadimg`,
       formData
     );
     console.log(response);
@@ -205,14 +206,18 @@ const AdminAddProduct = () => {
                                 };
                               });
                           }}
-                          src={`${uploadServer}/imgs/${img}`}
+                          src={`${imgServer}/imgs/${img}`}
                           width="100"
                         />
                       );
                     })}
                 </div>
                 <div className="input-box">
-                  <label>Description: </label>
+                  <label
+                    style={{ display: "block", padding: "0px 0px 5px 5px" }}
+                  >
+                    Description:{" "}
+                  </label>
                   <Editor
                     value={productForm?.description}
                     onTextChange={(e) =>
@@ -222,18 +227,22 @@ const AdminAddProduct = () => {
                     }
                     style={{ height: "200px" }}
                   />
-
-                  {/* <textarea
-                    placeholder="Description"
-                    onChange={(e) =>
-                      setProductForm((prev) => {
-                        return {
-                          ...prev,
-                          description: e.target.value,
-                        };
+                </div>
+                <div className="input-box">
+                  <label
+                    style={{ display: "block", padding: "10px 0px 5px 5px" }}
+                  >
+                    Wash Care:{" "}
+                  </label>
+                  <Editor
+                    value={productForm?.washcare}
+                    onTextChange={(e) =>
+                      setProductForm((prev: any) => {
+                        return { ...prev, washcare: e.htmlValue };
                       })
                     }
-                  ></textarea> */}
+                    style={{ height: "200px" }}
+                  />
                 </div>
                 <div className="input-box">
                   <label>Size: </label>
