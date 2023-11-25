@@ -293,9 +293,12 @@ const Product = () => {
                 <p style={{ paddingTop: "15px", fontWeight: "600" }}>
                   Description:
                 </p>
-                <p style={{ paddingTop: "15px" }}>
-                  {productDetails?.description}
-                </p>
+                <p
+                  style={{ paddingTop: "15px" }}
+                  dangerouslySetInnerHTML={{
+                    __html: productDetails?.description,
+                  }}
+                ></p>
               </div>
             )}
           </div>

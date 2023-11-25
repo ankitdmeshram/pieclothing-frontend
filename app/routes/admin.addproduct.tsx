@@ -6,6 +6,8 @@ import { addProduct, imageUpload } from "~/controllers/productController";
 import isadmin from "~/component/isadmin";
 import { imageUploadAPI } from "~/utils/api";
 import { uploadServer } from "~/utils/domain";
+import { Editor } from "primereact/editor";
+
 const AdminAddProduct = () => {
   isadmin();
 
@@ -211,7 +213,17 @@ const AdminAddProduct = () => {
                 </div>
                 <div className="input-box">
                   <label>Description: </label>
-                  <textarea
+                  <Editor
+                    value={productForm?.description}
+                    onTextChange={(e) =>
+                      setProductForm((prev: any) => {
+                        return { ...prev, description: e.htmlValue };
+                      })
+                    }
+                    style={{ height: "200px" }}
+                  />
+
+                  {/* <textarea
                     placeholder="Description"
                     onChange={(e) =>
                       setProductForm((prev) => {
@@ -221,7 +233,7 @@ const AdminAddProduct = () => {
                         };
                       })
                     }
-                  ></textarea>
+                  ></textarea> */}
                 </div>
                 <div className="input-box">
                   <label>Size: </label>

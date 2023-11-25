@@ -60,7 +60,12 @@ const Products = ({ ptype }) => {
                       <>Rs.{product?.price}</>
                     )}
                   </p>
-                  <p className="description">{product?.description}</p>
+                  <p
+                    className="description"
+                    dangerouslySetInnerHTML={{
+                      __html: `${product?.description.slice(0, 20)}...`,
+                    }}
+                  ></p>
                 </div>
               </Link>
             );

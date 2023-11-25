@@ -7,6 +7,8 @@ import { useLocation } from "@remix-run/react";
 import isadmin from "~/component/isadmin";
 import { uploadServer } from "~/utils/domain";
 import { imageUploadAPI } from "~/utils/api";
+import { Editor } from "primereact/editor";
+
 const AdminEditProduct = () => {
   isadmin();
 
@@ -225,7 +227,16 @@ const AdminEditProduct = () => {
                 </div>
                 <div className="input-box">
                   <label>Description: </label>
-                  <textarea
+                  <Editor
+                    value={productForm?.description}
+                    onTextChange={(e) =>
+                      setProductForm((prev: any) => {
+                        return { ...prev, description: e.htmlValue };
+                      })
+                    }
+                    style={{ height: "200px" }}
+                  />
+                  {/* <textarea
                     placeholder="Description"
                     onChange={(e) =>
                       setProductForm((prev) => {
@@ -236,7 +247,7 @@ const AdminEditProduct = () => {
                       })
                     }
                     value={productForm?.description}
-                  ></textarea>
+                  ></textarea> */}
                 </div>
                 <div className="input-box">
                   <label>Size: </label>
