@@ -2,12 +2,11 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family: "Bebas Neue", sans-serif; letter-spacing: 2px
 }
 
 body {
   overflow-x: hidden;
-
 }
 
 /* navbar */
@@ -25,7 +24,6 @@ body {
   justify-content: space-between;
   z-index: 1;
   top: 0;
-
 }
 
 .logo {
@@ -55,10 +53,8 @@ body {
   margin-right: 30px;
 }
 
-
 .white-nav {
   color: black !important;
-
 }
 
 .white-nav a {
@@ -96,7 +92,6 @@ body {
   display: block;
   color: rgba(255, 255, 255, 0.637);
   text-decoration: none;
-
 }
 
 .home-footer .links a svg {
@@ -106,7 +101,6 @@ body {
 }
 
 @media (max-width: 992px) {
-
   .navigation {
     display: none;
   }
@@ -128,7 +122,6 @@ body {
 
   .desk {
     display: none;
-
   }
 
   .mob {
@@ -146,14 +139,13 @@ body {
     fill: black;
   }
 
-
   .gs-sidebar {
     height: 100vh;
     background: white;
     width: 100vw;
     position: fixed;
     z-index: 2;
-    transition: .3s;
+    transition: 0.3s;
     display: block;
   }
 
@@ -170,7 +162,7 @@ body {
 
   .gs-sidebar-no {
     display: none;
-    transition: .3s;
+    transition: 0.3s;
   }
 
   .gs-sidebar .nav a {

@@ -43,7 +43,7 @@ const Products = ({ ptype }) => {
                   ) : (
                     <img
                       className="product-image"
-                      src={`${domain}/imgs/1700847513859.png}`}
+                      src={`${domain}/imgs/1700847513859.png`}
                       alt=""
                       loading="lazy"
                     />
