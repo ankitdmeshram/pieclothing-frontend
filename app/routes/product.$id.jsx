@@ -1,7 +1,7 @@
 import { useLoaderData, useNavigate } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { singleProduct } from "../controllers/productController";
-import { addCart } from "../controllers/cartController";
+import { addCart, viewCart } from "../controllers/cartController";
 import singleProductStyle from "../styles/singleProduct.css";
 import Navbar from "~/component/navbar";
 import { getCookie, setCookie } from "../utils/cookies";
@@ -21,6 +21,9 @@ const Product = () => {
     size: "",
     color: "",
   });
+
+  const [cartList, setCartList] = useState();
+
   const [whichBtn, setWhichBtn] = useState("add");
   const [imgUrl, setImgUrl] = useState(`${imgServer}/imgs/1700847513859.png`);
   const [msg, setMsg] = useState("");
@@ -135,12 +138,27 @@ const Product = () => {
     if (cartResponse?.success) {
       setWhichBtn("view");
       setShowCart(true);
+      viewCartById();
+    }
+  };
+
+  const viewCartById = async () => {
+    const response = await viewCart(forCart?.uid);
+    if (response) {
+      console.log("response 57 ", response);
+      if (response?.productList.length > 0) {
+        await setCartList(response);
+      }
     }
   };
 
   return (
     <>
-      <SideCart isShowCart={showCart} />
+      <SideCart
+        isShowCart={showCart}
+        cartList={cartList}
+        userId={forCart?.uid}
+      />
       <Navbar />
       <div className="singleProduct">
         <div className="pro-main">

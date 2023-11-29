@@ -91,9 +91,13 @@ const adminCart = () => {
                               <td width={100}>
                                 <button
                                   className="delete"
-                                  onClick={() => deleteFromCart(cart?._id)}
+                                  onClick={() => {
+                                    confirm("Are you sure ?")
+                                      ? deleteFromCart(cart?._id)
+                                      : null;
+                                  }}
                                 >
-                                  Delete
+                                  Remove
                                 </button>
                               </td>
                             </tr>

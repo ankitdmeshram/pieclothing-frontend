@@ -1,11 +1,34 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { deleteCart } from "~/controllers/cartController";
+import { imgServer } from "~/utils/domain";
 
-const SideCart = ({ isShowCart }) => {
+const SideCart = ({ isShowCart, cartList, userId }) => {
   const [showCart, setShowCart] = useState(isShowCart);
-
+  const [cartDetails, setCartDetails] = useState([]);
+  const [uId, setUid] = useState("");
   useEffect(() => {
     setShowCart(isShowCart);
   }, [isShowCart]);
+
+  useEffect(() => {
+    setCartDetails(cartList?.productList);
+  }, [cartList]);
+
+  useEffect(() => {
+    setUid(userId);
+  }, [userId]);
+
+  const deleteCartById = async (_id) => {
+    const response = await deleteCart(uId, _id);
+    if (response?.success) {
+      setCartDetails((prev) => {
+        const newCart = prev.filter((p) => p?._id != _id);
+        console.log(newCart);
+        return newCart;
+      });
+      console.log("Response 88", response);
+    }
+  };
 
   return (
     <>
@@ -18,7 +41,65 @@ const SideCart = ({ isShowCart }) => {
         onClick={() => setShowCart(false)}
       ></div>
 
-      <div className={showCart ? "scart scart-show" : "scart"}></div>
+      <div className={showCart ? "scart scart-show" : "scart"}>
+        <h3>Shopping Cart</h3>
+        {cartDetails?.length > 0 &&
+          cartDetails.map((p, i) => {
+            return (
+              <React.Fragment key={i}>
+                <div className="cart-det">
+                  <div className="cart-img">
+                    <img src={`${imgServer}/imgs/${p?.gallery[0]}`} alt="" />
+                  </div>
+                  <div className="cart-info">
+                    <h5>
+                      {p?.name}{" "}
+                      <span
+                        style={{
+                          float: "right",
+                          fontFamily: "sans-serif",
+                          color: "red",
+                        }}
+                        onClick={() => {
+                          confirm("Are you sure ? ") && deleteCartById(p?._id);
+                        }}
+                      >
+                        x
+                      </span>
+                    </h5>
+
+                    <table
+                      border={1}
+                      style={{ width: "100%", textAlign: "center" }}
+                    >
+                      {p?.size && p?.size.length > 0 && (
+                        <thead>
+                          <tr>
+                            <th>Size</th>
+                            <th>Quantity</th>
+                          </tr>
+                        </thead>
+                      )}
+
+                      <tbody>
+                        {p?.size &&
+                          p?.size.length > 0 &&
+                          p?.size.map((s) => {
+                            return (
+                              <tr>
+                                <td>{s.size}</td>
+                                <td>{s.quantity}</td>
+                              </tr>
+                            );
+                          })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </React.Fragment>
+            );
+          })}
+      </div>
 
       <div
         className={showCart ? "ca-cncl" : "ca-cncl-no"}
