@@ -1,6 +1,7 @@
 .gs-checkout {
   padding: 100px;
   display: flex;
+  flex-wrap: wrap;
 }
 .gs-form {
   width: 60%;
@@ -59,4 +60,16 @@ h4 span {
   padding: 5px;
   font-size: 18px;
   margin-bottom: 20px;
+}
+
+@media (max-width: 992px) {
+  .gs-form {
+    width: 100%;
+  }
+  .gs-payy {
+    width: 100%;
+  }
+  .gs-checkout {
+    padding: 100px 5%;
+  }
 }
