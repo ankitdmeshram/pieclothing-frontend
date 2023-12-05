@@ -5,11 +5,14 @@ import { getCookie, setCookie } from "../utils/cookies";
 import { useEffect, useState } from "react";
 import { deleteCart, viewCart } from "~/controllers/cartController";
 import { frontdomain, imgServer } from "~/utils/domain";
+import { useNavigate } from "@remix-run/react";
 
 const Cart = () => {
   const [userId, setUserId] = useState("");
   const [cartList, setCartList] = useState([]);
   const [cartTotal, setCartTotal] = useState(0);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     userDetails();
@@ -156,7 +159,10 @@ const Cart = () => {
 
       {cartList.length > 0 && (
         <div className="cart-total">
-          <h2> Total : {cartTotal}</h2>
+          <h2 style={{ paddingRight: "50px" }}> Total : {cartTotal}</h2>
+          <button className="checkout-btn" onClick={() => navigate("../checkout")}>
+            Proceed To Checkout
+          </button>
         </div>
       )}
 

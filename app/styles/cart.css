@@ -1,5 +1,5 @@
 * {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   padding: 0;
   margin: 0;
 }
@@ -56,4 +56,11 @@ table tr {
   background: rgba(255, 0, 0, 0.605);
   border: none;
   font-size: 18px;
+}
+
+.checkout-btn {
+  background: black;
+  color: white;
+  font-size: 18px;
+  padding: 7px 20px;
 }
