@@ -67,7 +67,7 @@ const SideCart = ({ isShowCart, cartList, userId }) => {
                         x
                       </span>
                     </h5>
-{/* 
+                    {/* 
                     <table
                       border={1}
                       style={{ width: "100%", textAlign: "center" }}

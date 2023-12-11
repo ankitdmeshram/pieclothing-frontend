@@ -4,6 +4,8 @@ import styles from "../styles/checkout.css";
 import { useEffect, useState } from "react";
 import { getCookie } from "../utils/cookies";
 import { postAPI } from "~/utils/api";
+import { viewCart } from "~/controllers/cartController";
+import { domain } from "~/utils/domain";
 
 const Checkout = () => {
   const [alreadyAcc, setAlreadyAcc] = useState(false);
@@ -13,12 +15,55 @@ const Checkout = () => {
       name: "",
       email: "",
       phone: "",
+      firstName: "",
+      lastName: "",
+      country: "",
+      address: "",
+      city: "",
+      state: "",
+      pincode: "",
     },
   });
+  const [cartList, setCartList] = useState([]);
+
+  const [cartTotal, setCartTotal] = useState(0);
+
+  useEffect(() => {
+    {
+      console.log(cartList);
+      setCartTotal(0);
+      cartList.length > 0 &&
+        cartList.map((cart) => {
+          if (cart?.offerPrice > 0) {
+            setCartTotal(
+              (total) => total + Number(cart?.offerPrice) * cart?.quantity
+            );
+          } else {
+            setCartTotal(
+              (total) => total + Number(cart?.price) * cart?.quantity
+            );
+          }
+        });
+    }
+  }, [cartList]);
 
   useEffect(() => {
     getUserData();
   }, []);
+
+  useEffect(() => {
+    console.log(userData);
+  }, [userData]);
+
+  const viewCartById = async (uid) => {
+    const response = await viewCart(uid);
+    if (response) {
+      console.log("response 57 ", response);
+      if (response?.productList.length > 0) {
+        await setCartList(response?.productList);
+      }
+    }
+  };
 
   const getUserData = async () => {
     try {
@@ -31,6 +76,17 @@ const Checkout = () => {
               userData: JSON.parse(res),
             };
           });
+          setUserData((prev) => {
+            return {
+              ...prev,
+              userData: {
+                ...prev.userData,
+                name: prev?.userData?.firstName + prev?.userData?.lastName,
+              },
+            };
+          });
+
+          viewCartById(JSON.parse(res)?._id);
         }
       });
     } catch (err) {}
@@ -38,38 +94,61 @@ const Checkout = () => {
 
   const [orderId, setOrderId] = useState("");
 
-  const createOrder = async () => {
+  const createOrder = async (i = 1) => {
     try {
-      const response = await postAPI("http://localhost:4000/api/order/create");
-      setOrderId(response.data.id);
+      const response = await postAPI(`${domain}/api/order/create`);
+      setOrderId(response.id);
+      handlePayment(i);
     } catch (error) {
       console.error("Error creating order:", error);
     }
   };
 
-  const handlePayment = () => {
+  const handlePayment = (i) => {
     // Use Razorpay.js to handle payment on the client side
     const options = {
       key: "rzp_test_MqoMJgNy2RIv4g",
-      amount: 50000, // amount in paise (e.g., 50000 paise = INR 500)
+      amount:
+        i == 1
+          ? ((cartTotal + (cartTotal * 18) / 100) * 100).toFixed(2)
+          : 100 * 100, // amount in paise (e.g., 50000 paise = INR 500)
       currency: "INR",
-      name: "Your Company Name",
-      description: "Purchase Description",
+      name: userData?.userData?.name,
+      description: "PieClothing Store",
       order_id: orderId,
       handler: function (response) {
         console.log("Payment success:", response);
         // You can handle success callback here
+        const body = {
+          order_id: orderId,
+          amountPaid:
+            i == 1 ? (cartTotal + (cartTotal * 18) / 100).toFixed(2) : 100,
+          amountRemaining:
+            i == 1 ? 0 : (cartTotal + (cartTotal * 18) / 100).toFixed(2) - 100,
+          name: userData?.userData?.name,
+          email: userData?.userData?.email,
+          phone: userData?.userData?.phone,
+          deliveryAdd: {
+            country: userData?.userData?.country,
+            address: userData?.userData?.address,
+            city: userData?.userData?.city,
+            state: userData?.userData?.state,
+            pincode: userData?.userData?.pincode,
+          },
+          cartList: cartList,
+        };
+        console.log("Bodyyyy", body);
       },
       prefill: {
-        name: "John Doe",
-        email: "john@example.com",
-        contact: "9876543210",
+        name: userData?.userData?.name,
+        email: userData?.userData?.email,
+        contact: userData?.userData?.phone,
       },
       notes: {
-        address: "Razorpay Corporate Office",
+        address: "PIE Clothing",
       },
       theme: {
-        color: "#3399cc",
+        color: "#000000",
       },
     };
 
@@ -88,14 +167,22 @@ const Checkout = () => {
               <input
                 type="text"
                 placeholder="Name"
-                value={userData?.userData?.name}
                 onChange={(e) =>
                   setUserData((prev) => {
                     return {
                       ...prev,
-                      name: e.target.value,
+                      userData: {
+                        ...prev.userData,
+                        name: e.target.value,
+                      },
                     };
                   })
+                }
+                value={
+                  userData?.userData?.name ||
+                  userData?.userData?.firstName +
+                    " " +
+                    userData?.userData?.lastName
                 }
               />
             </div>
@@ -108,7 +195,10 @@ const Checkout = () => {
                   setUserData((prev) => {
                     return {
                       ...prev,
-                      email: e.target.value,
+                      userData: {
+                        ...prev.userData,
+                        email: e.target.value,
+                      },
                     };
                   })
                 }
@@ -123,7 +213,10 @@ const Checkout = () => {
                   setUserData((prev) => {
                     return {
                       ...prev,
-                      phone: e.target.value,
+                      userData: {
+                        ...prev.userData,
+                        phone: e.target.value,
+                      },
                     };
                   })
                 }
@@ -176,20 +269,90 @@ const Checkout = () => {
           <h3>Delivery</h3>
 
           <div className="input">
-            <input type="text" placeholder="Country" />
+            <input
+              type="text"
+              placeholder="Country"
+              onChange={(e) =>
+                setUserData((prev) => {
+                  return {
+                    ...prev,
+                    userData: {
+                      ...prev.userData,
+                      country: e.target.value,
+                    },
+                  };
+                })
+              }
+            />
           </div>
           <div className="input">
-            <input type="text" placeholder="Address" />
+            <input
+              type="text"
+              placeholder="Address"
+              onChange={(e) =>
+                setUserData((prev) => {
+                  return {
+                    ...prev,
+                    userData: {
+                      ...prev.userData,
+                      address: e.target.value,
+                    },
+                  };
+                })
+              }
+            />
           </div>
           <div className="input-group">
             <div className="input">
-              <input type="text" placeholder="City" />
+              <input
+                type="text"
+                placeholder="City"
+                onChange={(e) =>
+                  setUserData((prev) => {
+                    return {
+                      ...prev,
+                      userData: {
+                        ...prev.userData,
+                        city: e.target.value,
+                      },
+                    };
+                  })
+                }
+              />
             </div>
             <div className="input">
-              <input type="text" placeholder="State" />
+              <input
+                type="text"
+                placeholder="State"
+                onChange={(e) =>
+                  setUserData((prev) => {
+                    return {
+                      ...prev,
+                      userData: {
+                        ...prev.userData,
+                        state: e.target.value,
+                      },
+                    };
+                  })
+                }
+              />
             </div>
             <div className="input">
-              <input type="text" placeholder="Pin Code" />
+              <input
+                type="text"
+                placeholder="Pin Code"
+                onChange={(e) =>
+                  setUserData((prev) => {
+                    return {
+                      ...prev,
+                      userData: {
+                        ...prev.userData,
+                        pincode: e.target.value,
+                      },
+                    };
+                  })
+                }
+              />
             </div>
           </div>
         </div>
@@ -200,25 +363,25 @@ const Checkout = () => {
               <thead>
                 <tr>
                   <th>Sub Total</th>
-                  <th>Rs. 3,4999</th>
+                  <th>Rs.{cartTotal.toFixed(2)}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>GST</td>
-                  <td>Rs.500</td>
+                  <td>Rs.{((cartTotal * 18) / 100).toFixed(2)}</td>
                 </tr>
                 <tr>
                   <th>Total</th>
-                  <td>Rs.4000</td>
+                  <td>Rs.{(cartTotal + (cartTotal * 18) / 100).toFixed(2)}</td>
                 </tr>
               </tbody>
             </table>
 
-            <p onClick={() => createOrder()}>
+            <p onClick={() => createOrder(1)}>
               Pay With GPay / Phone Pay / UPI / Debit Card / Credit Card
             </p>
-            <p onClick={() => handlePayment()}>
+            <p onClick={() => createOrder(0)}>
               Cash On Delivery <span>(Rs.100 Extra Online)</span>
             </p>
           </div>
