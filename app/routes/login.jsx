@@ -32,7 +32,12 @@ const login = () => {
       if (userCookie?.success) {
         // console.log("treeeeeee  ");
         setCookie("UD", JSON.stringify(userCookie?.userDetails));
-        navigate("../");
+
+        if (userCookie?.userDetails?.AccountType == "admin") {
+          navigate("../admin/dashboard");
+        } else {
+          navigate("../");
+        }
       } else {
         console.log("falseeee  ");
       }

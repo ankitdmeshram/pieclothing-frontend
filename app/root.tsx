@@ -32,6 +32,8 @@ export default function App() {
           href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
           rel="stylesheet"
         ></link>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
       </head>
       <body>
         <Outlet />
