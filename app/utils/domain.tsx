@@ -4,4 +4,4 @@
 export const frontdomain = "https://pieclothing.in";
 export const domain = "https://backend.pieclothing.in";
 
-export const imgServer = "https://backend.pieclothing.in";
+export const imgServer = "https://backend.pieclothing.in"; 
