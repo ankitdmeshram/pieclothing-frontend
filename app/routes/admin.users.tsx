@@ -66,7 +66,10 @@ const adminUsers = () => {
                             <td>{user?.firstName + " " + user?.lastName}</td>
                             <td>{user?.email}</td>
                             <td>{user?.phone}</td>
-                            <td> {user?.created_at}</td>
+                            <td>
+                              {" "}
+                              {new Date(user?.created_at).toLocaleString()}
+                            </td>
                             <td>
                               <button
                                 className="delete"
