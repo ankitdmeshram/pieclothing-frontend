@@ -1,3 +1,4 @@
+import { useNavigate } from "@remix-run/react";
 import React, { useState, useEffect } from "react";
 import { deleteCart } from "~/controllers/cartController";
 import { imgServer } from "~/utils/domain";
@@ -6,6 +7,9 @@ const SideCart = ({ isShowCart, cartList, userId }) => {
   const [showCart, setShowCart] = useState(isShowCart);
   const [cartDetails, setCartDetails] = useState([]);
   const [uId, setUid] = useState("");
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     setShowCart(isShowCart);
   }, [isShowCart]);
@@ -18,23 +22,46 @@ const SideCart = ({ isShowCart, cartList, userId }) => {
     setUid(userId);
   }, [userId]);
 
-  const deleteCartById = async (_id) => {
-    const response = await deleteCart(uId, _id);
-    if (response?.success) {
-      setCartDetails((prev) => {
-        const newCart = prev.filter((p) => p?._id != _id);
-        console.log(newCart);
-        return newCart;
-      });
-      console.log("Response 88", response);
+  // const deleteCartById = async (_id) => {
+  //   const response = await deleteCart(uId, _id);
+  //   if (response?.success) {
+  //     setCartDetails((prev) => {
+  //       const newCart = prev.filter((p) => p?._id != _id);
+  //       console.log(newCart);
+  //       return newCart;
+  //     });
+  //     console.log("Response 88", response);
+  //   }
+  // };
+
+  const deleteCartById = async (userId = uId, _id, size, quantity) => {
+    try {
+      if (confirm("Are you sure?")) {
+        const response = await deleteCart(userId, _id, size, quantity);
+        if (response?.success) {
+          setCartDetails((prev) => {
+            let newCart;
+            if (size == "") {
+              newCart = prev.filter((p) => p?._id != _id);
+            } else {
+              newCart = prev.filter((p) => !(p?._id == _id && p?.size == size));
+            }
+            console.log(newCart);
+            return newCart;
+          });
+          console.log("Response 88", response);
+        }
+      }
+    } catch (err) {
+      alert("Something went wrong");
     }
   };
 
   return (
     <>
-      <div className="cartBtn" onClick={() => setShowCart(!showCart)}>
+      {/* <div className="cartBtn" onClick={() => setShowCart(!showCart)}>
         =
-      </div>
+      </div> */}
 
       <div
         className={showCart ? "fullscreen" : "ca-cncl-no"}
@@ -61,12 +88,21 @@ const SideCart = ({ isShowCart, cartList, userId }) => {
                           color: "red",
                         }}
                         onClick={() => {
-                          confirm("Are you sure ? ") && deleteCartById(p?._id);
+                          confirm("Are you sure ? ") &&
+                            deleteCartById(
+                              userId,
+                              p?._id,
+                              p?.size,
+                              p?.quantity
+                            );
                         }}
                       >
                         x
                       </span>
                     </h5>
+                    {p?.size && <p>Size: {p?.size}</p>}
+                    {p?.quantity && <p>Quantity: {p?.quantity}</p>}
+
                     {/* 
                     <table
                       border={1}
@@ -133,6 +169,12 @@ const SideCart = ({ isShowCart, cartList, userId }) => {
               </button>
             </div>
           </>
+        )}
+
+        {cartDetails?.length > 0 && (
+          <div className="checkout-btn">
+            <button onClick={() => navigate("../checkout")}>Checkout</button>
+          </div>
         )}
       </div>
 

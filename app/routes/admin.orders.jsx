@@ -69,7 +69,7 @@ const adminOrders = () => {
                     <th>Created At</th>
                     <th>Updated At</th>
                     <th>Delete</th>
-                    <th>Update</th>
+                    {/* <th>Update</th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -105,12 +105,11 @@ const adminOrders = () => {
                             Delete
                           </button>
                         </td>
-                        <td width={100}>
+                        {/* <td width={100}>
                           <button className="edit" onClick={() => {}}>
                             Edit
                           </button>
-                          {/* </Form> */}
-                        </td>
+                        </td> */}
                       </tr>
                     );
                   })}

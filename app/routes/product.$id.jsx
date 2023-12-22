@@ -46,8 +46,8 @@ const Product = () => {
     console.log("forCart", forCart);
   }, [forCart]);
 
-  const userDetails = () => {
-    getCookie("UD")
+  const userDetails = async () => {
+    await getCookie("UD")
       .then((res) => {
         if (!res) {
           throw err;
@@ -100,6 +100,7 @@ const Product = () => {
             });
           });
       });
+    viewCartById();
   };
 
   const addToCart = async (_id) => {
@@ -308,7 +309,7 @@ const Product = () => {
                 View Cart
               </div>
             )}
-            <div className="buy-now">Buy Now</div>
+            {/* <div className="buy-now">Buy Now</div> */}
             {productDetails?.description && (
               <div className="decription">
                 <details>
