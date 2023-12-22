@@ -86,8 +86,12 @@ const adminCart = () => {
                                   : "Unknown"}
                               </td>
                               <td>{cart?.totalQuantity}</td>
-                              <td>{cart?.created_date}</td>
-                              <td>{cart?.updated_date}</td>
+                              <td>
+                                {new Date(cart?.created_date).toLocaleString()}
+                              </td>
+                              <td>
+                                {new Date(cart?.updated_date).toLocaleString()}
+                              </td>
                               <td width={100}>
                                 <button
                                   className="delete"

@@ -93,8 +93,12 @@ const AdminProducts = () => {
                               <>Rs.{product?.price}</>
                             )}
                           </td>
-                          <td>{product?.created_date}</td>
-                          <td>{product?.updated_date}</td>
+                          <td>
+                            {new Date(product?.created_date).toLocaleString()}
+                          </td>
+                          <td>
+                            {new Date(product?.updated_date).toLocaleString()}
+                          </td>
                           <td width={100}>
                             <button
                               className="delete"

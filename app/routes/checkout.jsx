@@ -23,6 +23,7 @@ const Checkout = () => {
       state: "",
       pincode: "",
     },
+    cartId: "",
   });
   const [cartList, setCartList] = useState([]);
 
@@ -52,13 +53,19 @@ const Checkout = () => {
   }, []);
 
   useEffect(() => {
-    console.log(userData);
+    console.log("line 56", userData);
   }, [userData]);
 
   const viewCartById = async (uid) => {
     const response = await viewCart(uid);
     if (response) {
       console.log("response 57 ", response);
+      setUserData((prev) => {
+        return {
+          ...prev,
+          cartId: response?.cart[0]?._id,
+        };
+      });
       if (response?.productList.length > 0) {
         await setCartList(response?.productList);
       }
@@ -96,15 +103,25 @@ const Checkout = () => {
 
   const createOrder = async (i = 1) => {
     try {
-      const response = await postAPI(`${domain}/api/order/create`);
+      const body = {
+        amount:
+          i == 1
+            ? ((cartTotal + (cartTotal * 18) / 100) * 100).toFixed(2)
+            : 100 * 100, // amount in paise (e.g., 50000 paise = INR 500)
+        currency: "INR",
+      };
+      const response = await postAPI(
+        `${domain}/api/order/create`,
+        JSON.stringify(body)
+      );
       setOrderId(response.id);
-      handlePayment(i);
+      handlePayment(i, response.id);
     } catch (error) {
       console.error("Error creating order:", error);
     }
   };
 
-  const handlePayment = (i) => {
+  const handlePayment = async (i, oid) => {
     // Use Razorpay.js to handle payment on the client side
     const options = {
       key: "rzp_test_MqoMJgNy2RIv4g",
@@ -114,13 +131,15 @@ const Checkout = () => {
           : 100 * 100, // amount in paise (e.g., 50000 paise = INR 500)
       currency: "INR",
       name: userData?.userData?.name,
+      cartId: userData?.cartId,
       description: "PieClothing Store",
-      order_id: orderId,
-      handler: function (response) {
+      order_id: orderId || oid,
+      handler: async function (response) {
         console.log("Payment success:", response);
         // You can handle success callback here
         const body = {
           order_id: orderId,
+          payment_id: response?.razorpay_payment_id,
           amountPaid:
             i == 1 ? (cartTotal + (cartTotal * 18) / 100).toFixed(2) : 100,
           amountRemaining:
@@ -136,8 +155,17 @@ const Checkout = () => {
             pincode: userData?.userData?.pincode,
           },
           cartList: cartList,
+          cartId: userData?.cartId,
+          uid: userData?.userData?._id,
         };
+        const responseOrder = await postAPI(
+          `${domain}/api/order/orderdata`,
+          JSON.stringify(body)
+        );
         console.log("Bodyyyy", body);
+        if (responseOrder) {
+          console.log("responseorder", responseOrder);
+        }
       },
       prefill: {
         name: userData?.userData?.name,
