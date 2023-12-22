@@ -63,6 +63,7 @@ const adminOrders = () => {
                   <tr>
                     <th>Sr. No.</th>
                     <th>Customer Name</th>
+                    <th>Email</th>
                     <th>Total Price</th>
                     <th>Payment Status</th>
                     <th>Created At</th>
@@ -81,6 +82,7 @@ const adminOrders = () => {
                             {order?.name}
                           </Link>
                         </td>
+                        <td>{order?.email}</td>
                         <td>{order?.amountPaid + order?.amountRemaining}</td>
                         <td>
                           {Number(order?.amountPaid) +

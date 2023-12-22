@@ -89,8 +89,8 @@ const Cart = () => {
     }
   };
 
-  const deleteCartById = async (userId, _id) => {
-    const response = await deleteCart(userId, _id);
+  const deleteCartById = async (userId, _id, size, quantity) => {
+    const response = await deleteCart(userId, _id, size, quantity);
     if (response?.success) {
       setCartList((prev) => {
         const newCart = prev.filter((p) => p?._id != _id);
@@ -113,6 +113,7 @@ const Cart = () => {
               <th style={{ minWidth: "100%" }}>Item</th>
               <th>Price</th>
               <th>Quantity</th>
+              <th>Size</th>
               <th>
                 <button className="cncl-btn">X </button>
               </th>
@@ -141,10 +142,18 @@ const Cart = () => {
                         {cart?.offerPrice > 0 ? cart?.offerPrice : cart?.price}
                       </td>
                       <td>{cart?.quantity}</td>
+                      <td>{cart?.size}</td>
                       <td>
                         <button
                           className="cncl-btn"
-                          onClick={() => deleteCartById(userId, cart?._id)}
+                          onClick={() =>
+                            deleteCartById(
+                              userId,
+                              cart?._id,
+                              cart?.size,
+                              cart?.quantity
+                            )
+                          }
                         >
                           X
                         </button>
@@ -160,7 +169,10 @@ const Cart = () => {
       {cartList.length > 0 && (
         <div className="cart-total">
           <h2 style={{ paddingRight: "50px" }}> Total : {cartTotal}</h2>
-          <button className="checkout-btn" onClick={() => navigate("../checkout")}>
+          <button
+            className="checkout-btn"
+            onClick={() => navigate("../checkout")}
+          >
             Proceed To Checkout
           </button>
         </div>

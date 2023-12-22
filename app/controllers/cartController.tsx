@@ -34,11 +34,37 @@ export const viewCart = (uid: string) => {
   }
 };
 
-export const deleteCart = (uid: string, pid: string) => {
+export const viewCartByID = (id: string) => {
+  try {
+    return postAPI(`${domain}/api/cart/viewcart`, JSON.stringify({ id }));
+  } catch (err) {
+    console.log("Something went wrong", err);
+  }
+};
+
+export const viewCartByCartId = (_id: string) => {
+  try {
+    return postAPI(
+      `${domain}/api/cart/viewcartbycartid`,
+      JSON.stringify({ _id })
+    );
+  } catch (err) {
+    console.log("Something went wrong", err);
+  }
+};
+
+export const deleteCart = (
+  uid: string,
+  pid: string,
+  size: string = "",
+  quantity: string = ""
+) => {
   try {
     const body = {
       uid,
       pid,
+      size,
+      quantity,
     };
     console.log(body);
     return postAPI(`${domain}/api/cart/deletecart`, JSON.stringify(body));
