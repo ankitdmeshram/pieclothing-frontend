@@ -90,14 +90,20 @@ const Cart = () => {
   };
 
   const deleteCartById = async (userId, _id, size, quantity) => {
-    const response = await deleteCart(userId, _id, size, quantity);
-    if (response?.success) {
-      setCartList((prev) => {
-        const newCart = prev.filter((p) => p?._id != _id);
-        console.log(newCart);
-        return newCart;
-      });
-      console.log("Response 88", response);
+    try {
+      if (confirm("Are you sure?")) {
+        const response = await deleteCart(userId, _id, size, quantity);
+        if (response?.success) {
+          setCartList((prev) => {
+            const newCart = prev.filter((p) => p?._id != _id);
+            console.log(newCart);
+            return newCart;
+          });
+          console.log("Response 88", response);
+        }
+      }
+    } catch (err) {
+      alert("Something went wrong");
     }
   };
 
