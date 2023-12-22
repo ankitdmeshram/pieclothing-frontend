@@ -95,7 +95,12 @@ const Cart = () => {
         const response = await deleteCart(userId, _id, size, quantity);
         if (response?.success) {
           setCartList((prev) => {
-            const newCart = prev.filter((p) => p?._id != _id);
+            let newCart;
+            if (size == "") {
+              newCart = prev.filter((p) => p?._id != _id);
+            } else {
+              newCart = prev.filter((p) => !(p?._id == _id && p?.size == size));
+            }
             console.log(newCart);
             return newCart;
           });

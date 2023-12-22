@@ -65,7 +65,17 @@ const OrderId = () => {
           <AdminHeader />
           <div className="dash-body">
             <div className="dash-content">
-              <button
+              <div
+                style={{
+                  padding: "10px 20px",
+                  // background: "black",
+                  color: "white",
+                  fontWeight: 600,
+                  margin: "10px 30px",
+                }}
+              ></div>
+
+              {/* <button
                 style={{
                   padding: "10px 20px",
                   background: "black",
@@ -76,7 +86,7 @@ const OrderId = () => {
                 onClick={() => setDisable(!disable)}
               >
                 {!disable ? "Cancel" : "Edit"}
-              </button>
+              </button> */}
 
               <div className="order-table">
                 <table border={1} className="cust-details">
@@ -258,9 +268,10 @@ const OrderId = () => {
                     </tr>
                     <tr>
                       <th>Order Status</th>
-                      <th>
-                        <select name="" id="">
-                          <option value=""></option>
+                      <th style={{ padding: 0, height: "10px" }}>
+                        <select style={{ padding: "10px", width: "100%" }}>
+                          <option value="In Progress">In Progress</option>
+                          <option value="Completed">Completed</option>
                         </select>
 
                         <button> {order?.status}</button>
@@ -283,6 +294,20 @@ const OrderId = () => {
                           Number(order?.amountRemaining)}
                       </th>
                     </tr>
+                    <tr style={{ padding: 0 }}>
+                      <td colSpan={2}>
+                        <button
+                          style={{
+                            background: "black",
+                            width: "100%",
+                            height: "100%",
+                            color: "white",
+                          }}
+                        >
+                          Update
+                        </button>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -295,7 +320,7 @@ const OrderId = () => {
                       <th>Image</th>
                       <th>Product Name</th>
                       <th>Quantity</th>
-                      {/* <th>Size</th> */}
+                      <th>Size</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -311,7 +336,7 @@ const OrderId = () => {
                           </td>
                           <td>{p?.name}</td>
                           <td>{p?.quantity}</td>
-                          {/* <td>{p?.size}</td> */}
+                          <td>{p?.size}</td>
                         </tr>
                       );
                     })}
