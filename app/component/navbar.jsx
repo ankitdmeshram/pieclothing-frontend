@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "@remix-run/react";
 import { useEffect } from "react";
+import logo from "../img/logo.jpeg";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -10,13 +11,19 @@ const Navbar = () => {
         if (window.scrollY >= 50) {
           document.getElementById("nav").style.backgroundColor = "white";
           document.getElementById("nav").classList = "white-nav navbar";
+          document.querySelector(".logo").style.display = "none";
+          document.querySelector(".logo-white").style.display = "block";
         } else {
           document.getElementById("nav").style.backgroundColor = "transparent";
           document.getElementById("nav").classList = "navbar";
+          document.querySelector(".logo").style.display = "block";
+          document.querySelector(".logo-white").style.display = "none";
         }
       } else {
         document.getElementById("nav").style.backgroundColor = "white";
         document.getElementById("nav").classList = "white-nav navbar";
+        document.querySelector(".logo").style.display = "none";
+        document.querySelector(".logo-white").style.display = "block";
       }
     });
   });
@@ -38,6 +45,12 @@ const Navbar = () => {
         <div className="logo">
           <h2 onClick={() => navigate("../")}>Pie</h2>
         </div>
+
+        <div className="logo-white">
+          <img src={logo} alt="Logo" />
+          <h2 onClick={() => navigate("../")}></h2>
+        </div>
+
         <div className="navigation">
           <Link to={"/"}>Home</Link>
           <Link to={"../products"}>Products</Link>

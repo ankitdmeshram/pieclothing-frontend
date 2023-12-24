@@ -30,6 +30,22 @@ body {
 .logo {
   margin: 0px 30px;
   font-weight: bold;
+  transition: 0.3s;
+}
+.logo h2 {
+  transition: 0.3s;
+}
+
+.logo-white {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  transition: 0.3s;
+  display: none;
+}
+.logo-white img {
+  width: 35px;
+  transition: 0.3s;
 }
 
 .navigation {
@@ -56,6 +72,7 @@ body {
 
 .white-nav {
   color: black !important;
+  transition: 0.3s;
 }
 
 .white-nav a {

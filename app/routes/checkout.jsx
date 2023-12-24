@@ -137,6 +137,7 @@ const Checkout = () => {
       handler: async function (response) {
         console.log("Payment success:", response);
         // You can handle success callback here
+        alert("Payment Successfull. ");
         const body = {
           order_id: orderId,
           payment_id: response?.razorpay_payment_id,
