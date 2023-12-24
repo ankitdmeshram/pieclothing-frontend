@@ -37,9 +37,6 @@ body {
 }
 
 .logo-white {
-  position: absolute;
-  width: 100%;
-  text-align: center;
   transition: 0.3s;
   display: none;
 }
@@ -198,5 +195,10 @@ body {
     bottom: 100px;
     width: 100%;
     left: 35px;
+  }
+  .logo-white {
+    position: absolute;
+    width: 100%;
+    text-align: center;
   }
 }
