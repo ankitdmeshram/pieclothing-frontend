@@ -409,9 +409,9 @@ const Checkout = () => {
             <p onClick={() => createOrder(1)}>
               Pay With GPay / Phone Pay / UPI / Debit Card / Credit Card
             </p>
-            <p onClick={() => createOrder(0)}>
+            {/* <p onClick={() => createOrder(0)}>
               Cash On Delivery <span>(Rs.100 Extra Online)</span>
-            </p>
+            </p> */}
           </div>
         </div>
       </div>

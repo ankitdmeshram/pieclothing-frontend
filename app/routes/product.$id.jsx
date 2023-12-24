@@ -1,6 +1,6 @@
 import { useLoaderData, useNavigate } from "@remix-run/react";
 import { useEffect, useState } from "react";
-import { singleProduct } from "../controllers/productController";
+import { getProducts, singleProduct } from "../controllers/productController";
 import { addCart, viewCart } from "../controllers/cartController";
 import singleProductStyle from "../styles/singleProduct.css";
 import Navbar from "~/component/navbar";
@@ -8,6 +8,8 @@ import { getCookie, setCookie } from "../utils/cookies";
 import SideCart from "~/component/sideCart";
 import { domain, imgServer } from "../utils/domain";
 import sideCartStyle from "../styles/sidecart.css";
+import Products from "../component/products";
+import ProductStyles from "../styles/products.css";
 
 const Product = () => {
   const loaderData = useLoaderData();
@@ -31,12 +33,14 @@ const Product = () => {
 
   useEffect(() => {
     console.log("Loaderdata", loaderData);
-    setProductDetails(loaderData?.product);
-    setImgUrl(`${imgServer}/imgs/${loaderData?.product?.gallery[0]}`);
+    setProductDetails(loaderData?.singleProductt?.product);
+    setImgUrl(
+      `${imgServer}/imgs/${loaderData?.singleProductt?.product?.gallery[0]}`
+    );
     setForCart((prev) => {
       return {
         ...prev,
-        pid: loaderData?.product?._id,
+        pid: loaderData?.singleProductt?.product?._id,
       };
     });
     userDetails();
@@ -344,6 +348,8 @@ const Product = () => {
           </div>
         </div>
       </div>
+
+      <Products ptype={productDetails?.ptype} />
     </>
   );
 };
@@ -354,7 +360,9 @@ export const loader = async ({ params }) => {
   // export async function loader({params}) {
   try {
     const id = params.id;
-    return await singleProduct(id);
+    const singleProductt = await singleProduct(id);
+    const productListt = await getProducts();
+    return { singleProductt, productListt };
   } catch (err) {
     console.log(err);
     return { message: "Something went wrong" };
@@ -370,4 +378,15 @@ export const links = () => [
     rel: "stylesheet",
     href: sideCartStyle,
   },
+  {
+    rel: "stylesheet",
+    href: ProductStyles,
+  },
 ];
+
+// export const loader = async () => {
+//   try {
+//   } catch (e) {
+//     return { message: "something went wrong" };
+//   }
+// };

@@ -9,18 +9,25 @@ const Products = ({ ptype }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    if (loaderData?.products) {
-      console.log(loaderData?.products);
+    console.log(loaderData);
+    if (loaderData?.products || loaderData?.productListt?.products) {
+      console.log(loaderData?.products, loaderData?.productListt?.products);
       if (ptype != null) {
         console.log("ptyope", ptype?.ptype);
         setProducts(() => {
-          const pdata = loaderData.products.filter(
-            (p) => p.type == ptype?.ptype
-          );
-          return pdata;
+          let pdata;
+          if (loaderData?.products) {
+            pdata = loaderData.products.filter((p) => p.type == ptype?.ptype);
+            return pdata;
+          } else {
+            pdata = loaderData?.productListt.products.filter(
+              (p) => p.type == ptype?.ptype
+            );
+            return pdata;
+          }
         });
       } else {
-        setProducts(loaderData?.products);
+        setProducts(loaderData?.products || loaderData?.productListt.products);
       }
     }
   }, [loaderData]);
@@ -28,7 +35,7 @@ const Products = ({ ptype }) => {
   return (
     <>
       <div className="products">
-        {products.length > 0 ? (
+        {products && products.length > 0 ? (
           products.map((product) => {
             return (
               <Link to={`../product/${product?._id}`} key={product?._id}>
