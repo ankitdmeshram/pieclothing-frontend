@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "@remix-run/react";
 import { useEffect } from "react";
 import logo from "../img/logo.jpeg";
+import { deleteCookie } from "~/utils/cookies";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -57,6 +58,14 @@ const Navbar = () => {
           <Link to={"../cart"}>Cart</Link>
           <Link to={"../login"}>Login </Link>
           <Link to={"../register"}>Register</Link>
+          <a
+            href="#"
+            onClick={() => {
+              deleteCookie("UD");
+            }}
+          >
+            Logout
+          </a>
         </div>
         <div className="icons">
           <Link to={"../login"}>
@@ -124,6 +133,16 @@ const Navbar = () => {
           </li>
           <li>
             <Link to={"../register"}>Register</Link>
+          </li>
+          <li>
+            <a
+              href="#"
+              onClick={() => {
+                deleteCookie("UD");
+              }}
+            >
+              Logout
+            </a>
           </li>
         </ul>
 
